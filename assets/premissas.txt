@@ -1,0 +1,22 @@
+7. Premissas a serem definidas pelo grupo para o desenvolvimento do simulador
+
+    Limite maximo de processos criados;
+    O valor da fatia de tempo dada aos processos em execucao;
+    Tempos de servico e de I/O aleatorios para cada processo criado;
+    Tempos de duracao de cada tipo de I/O (disco, fita magnetica e impressora);
+
+    Gerencia de Processos
+        Definicao do PID de cada processo,
+        Escalonador (pelo menos 3 filas, sendo uma fila de alta e uma de baixa prioridade para execucao na CPU, e 1 fila de I/O, que pode ser implementada com filas diferentes para cada tipo de dispositivo);
+
+    Tipos de I/O
+        Disco - retorna para a fila de baixa prioridade;
+        Fita magnetica - retorna para a fila de alta prioridade;
+        Impressora - retorna para a fila de alta prioridade;
+        
+    Ordem de entrada na fila de prontos
+        Processos novos - entram na fila de alta prioridade;
+        Processos que retornam de I/O - dependente do tipo de I/O solicitado;
+        Processos que sofreram preempcao  retornam na fila de baixa prioridade.
+
+    OBS: As premissas estabelecidas pelo grupo devem estar explicitadas no relatorio.

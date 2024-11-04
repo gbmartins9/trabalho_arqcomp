@@ -1,0 +1,6 @@
+Tarefas para fazer:
+ 
+1 - Definir como serão tratados os processos no programa OK
+2 - Definir considerações iniciais (as do PDF)
+3 - Definir algoritmo principal para o escalonador
+4 - Definir entrada/saída de processos
