@@ -2,12 +2,14 @@
 
 //TODO: Na inicialização, tempo restante = tempo de serviço. 
 //TODO: Também temos que garantir que tempo restante <= tempo de serviço sempre. 
-Processo novoProcesso(int id, int tempo_servico, int tempo_restante, int prioridade) {
+//TODO: Implementar instante de ativação corretamente.
+Processo novoProcesso(int id, int tempo_servico, int prioridade) {
     Processo p;
     p.id = id;
     p.tempo_servico = tempo_servico; 
-    p.tempo_restante = tempo_restante; 
+    p.tempo_restante = tempo_servico; 
     p.prioridade = prioridade;
+    p.instante_ativacao = 0; //! MUDAR
     return p;
 }
 

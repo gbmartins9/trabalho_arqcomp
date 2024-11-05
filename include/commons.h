@@ -9,7 +9,7 @@
 /*DEFINIÇÕES*/
 
 //Definições de tags para o código.
-#define QUANTUM 5
+#define QUANTUM 1
 #define MAX_IO 10
 
 //TODO: Definir corretamente como faremos a prioridade.
@@ -48,6 +48,7 @@ typedef struct {
     int id;
     int tempo_servico;
     int tempo_restante;
+    int instante_ativacao;
     int prioridade;
     // IO lista_io[MAX_IO]; //* Tirei momentaneamente para testar os processos.
 } Processo;
@@ -58,7 +59,7 @@ typedef struct {
 
 //? Mantenho como variável mesmo, ou mudo para ponteiro?
 //? Talvez pra funcionalidade de "deletar processo" seja necessário, caso o processo chegue ao final da fila
-Processo novoProcesso(int id, int tempo_servico, int tempo_restante, int prioridade);
+Processo novoProcesso(int id, int tempo_servico, int prioridade);
 
 void mostraProcesso(Processo p);
 
