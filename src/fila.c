@@ -6,7 +6,7 @@
 ? checaremos após criarmos a fila se f retornou NULL ou não.
 */
 
-Fila *inicializaFila() {
+Fila *inicializaFila(int identificador) {
     Fila *f = (Fila *) malloc(sizeof(Fila));
     if (f == NULL) {
         return NULL;
@@ -14,13 +14,14 @@ Fila *inicializaFila() {
     else {
         f->inicio = NULL;
         f->fim = NULL;
+        f->identificador = identificador;
         return f;
     }
 }
 
 No *novoNo(Processo p) {
     No *novo = (No *) malloc(sizeof(No));
-    if (novo = NULL) {
+    if (novo == NULL) {
         return NULL;
     }
     else {
@@ -67,7 +68,7 @@ bool inserirFila(Fila *f, Processo p) {
 }
 
 bool removerFila(Fila *f, Processo *p) {
-    if (f = NULL || f->inicio == NULL) {
+    if (f == NULL || f->inicio == NULL) {
         return false;
     }
     else {
@@ -86,7 +87,7 @@ bool removerFila(Fila *f, Processo *p) {
 
 void mostrarFila(Fila *f) {
     No *aux = f->inicio;
-    printf("Fila: ");
+    printf("Fila %d: ", f->identificador);
     while (aux != NULL) {
         printf(" [%d] ", aux->processo.id);
         aux = aux->proximo_processo;
@@ -108,7 +109,8 @@ bool atualizaPrioridade(Fila *f1, Fila *f2) {
             f1->fim = f2->fim;
         }
         else {
-            f1->fim = f2->inicio;
+            f1->fim->proximo_processo = f2->inicio;
+            f1->fim = f2->fim;
         } 
         f2->inicio = NULL;
         f2->fim = NULL;

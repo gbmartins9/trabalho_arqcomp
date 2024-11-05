@@ -4,14 +4,19 @@
 /*BIBLIOTECAS E HEADERS*/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*DEFINIÇÕES*/
 
 //Definições de tags para o código.
 #define QUANTUM 5
 #define MAX_IO 10
+
+//TODO: Definir corretamente como faremos a prioridade.
 #define PRIORIDADE_BAIXA 0
 #define PRIORIDADE_ALTA 1
+
+#define TAMANHO_MAX_STRING 10
 
 #define bool int
 #define true 1

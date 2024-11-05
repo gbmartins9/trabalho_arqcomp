@@ -6,13 +6,14 @@
 //Definição de nó de uma Fila
 typedef struct no {
     Processo processo; //Mudar o nome depois
-    Processo *proximo_processo;
+    struct no *proximo_processo;
 } No;
 
 //Definição de Fila
 typedef struct {
     No *inicio;
     No *fim;
+    int identificador; //! Não sei se precisa ou não, pois temos que definir como será a prioridade de fato. 
 } Fila;
 
 //Inicializa uma Fila, colocando seus ponteiros para NULL.
