@@ -3,7 +3,14 @@
 #include "../include/commons.h"
 #include "../include/fila.h"
 
+/* 
+ *Processos novos entram direto na alta prioridade
+ *Processos novos com I/O depende
+ *Processos com preempção entram na baixa prioridade 
+*/
+
 //! Inicialmente fazendo apenas com uma fila (sem feedback)
+//* Acho que não vai precisar
 bool setEscalonador(Fila *f, Processo lista_processos[]);
 
 int main() {
@@ -12,7 +19,7 @@ int main() {
 
     /*INICIALIZAÇÃO*/
     Fila *fila_baixa = inicializaFila(PRIORIDADE_BAIXA);
-    // Fila *fila_alta = inicializaFila(PRIORIDADE_ALTA);
+    Fila *fila_alta = inicializaFila(PRIORIDADE_ALTA);
 
     //? Quando fizermos a entrada do arquivo, acho que mudar para um vetor seria interessante e facilitaria o código
     Processo *lista_processos = (Processo *) malloc(sizeof(Processo) * 5);
@@ -34,13 +41,12 @@ int main() {
     //Função para dar "set" no simulador
     //Função para dar "play" no simulador, executando até o critério de parada
 
-    if(setEscalonador(fila_baixa, lista_processos) == false) {
+    if(setEscalonador(fila_baixa, lista_processos) == false) { //Joga todo mundo na fila apenas. //! Tirar depois
         printf("Nao foi possivel inicializar o escalonador\n");
         return -1;
     }
     
     mostrarFila(fila_baixa);
-
 
     while (fila_baixa->inicio != NULL) {
         removerFila(fila_baixa, &atual);
@@ -49,7 +55,7 @@ int main() {
             inserirFila(fila_baixa, atual);    
         }
         else {
-            tempo_passado = QUANTUM - atual.tempo_restante; //! Ainda não usamos esse tempo para nada, mas talvez seja necessário depois
+            //TODO: CONSIDERAR CASO O TEMPO DO QUANTUM SEJA MAIOR QUE O TIME SLICE NECESSÁRIO
         }
         teste++;
         mostrarFila(fila_baixa);

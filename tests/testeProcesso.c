@@ -4,7 +4,7 @@
 int main() {
 
     Processo *p = (Processo *) malloc(sizeof(Processo));
-    *p = novoProcesso(1, 10, 10, 5);
+    *p = novoProcesso(1, 10, 10);
 
     printf("Testando processos: \n");
     mostraProcesso(*p);

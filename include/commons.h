@@ -6,16 +6,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 /*DEFINIÇÕES*/
 
 //Definições de tags para o código.
 #define QUANTUM 1
 #define MAX_IO 10
 
-//TODO: Definir corretamente como faremos a prioridade.
+//! Se tirar o identificador, tirar isso
 #define PRIORIDADE_BAIXA 0
 #define PRIORIDADE_ALTA 1
 
+//! Se não usar tira
 #define TAMANHO_MAX_STRING 10
 
 #define bool int
@@ -50,7 +52,7 @@ typedef struct {
     int tempo_restante;
     int instante_ativacao;
     int prioridade;
-    // IO lista_io[MAX_IO]; //* Tirei momentaneamente para testar os processos.
+    //IO lista_io[MAX_IO]; //* Tirei momentaneamente para testar os processos.
 } Processo;
 
 /*FUNÇÕES*/

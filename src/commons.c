@@ -1,6 +1,5 @@
 #include "../include/commons.h"
 
-//TODO: Na inicialização, tempo restante = tempo de serviço. 
 //TODO: Também temos que garantir que tempo restante <= tempo de serviço sempre. 
 //TODO: Implementar instante de ativação corretamente.
 Processo novoProcesso(int id, int tempo_servico, int prioridade) {

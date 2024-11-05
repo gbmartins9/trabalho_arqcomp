@@ -95,6 +95,8 @@ void mostrarFila(Fila *f) {
     printf("\n");
 }
 
+
+//! TIRAR ESSA FUNÇÃO
 /*
 ? OBS: se tirarmos as checagens de f1 == NULL ou f2 == NULL, acho que podemos 
 ? fazer retornar void.

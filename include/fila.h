@@ -39,6 +39,6 @@ void mostrarFila(Fila *f);
 
 //Para cada elemento de f2, passa esse elemento para f1. 
 //O que faz na prática e fazer o final de f1 apontar para o início de f2, e então zerar f2
-bool atualizaPrioridade(Fila *f1, Fila *f2);
+bool atualizaPrioridade(Fila *f1, Fila *f2); //! TIRAR POIS NÃO TROCAM DE PRIORIDADE!!!
 
 #endif
