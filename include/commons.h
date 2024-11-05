@@ -1,8 +1,11 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
+/*BIBLIOTECAS E HEADERS*/
 #include <stdio.h>
 #include <stdlib.h>
+
+/*DEFINIÇÕES*/
 
 //Definições de tags para o código.
 #define QUANTUM 5
@@ -41,8 +44,17 @@ typedef struct {
     int tempo_servico;
     int tempo_restante;
     int prioridade;
-    IO lista_io[MAX_IO];
+    // IO lista_io[MAX_IO]; //* Tirei momentaneamente para testar os processos.
 } Processo;
 
+/*FUNÇÕES*/
+
+//? Não sei se deixo aqui, ou se movo para outro arquivo header depois. Por enquanto deixarei aqui por simplicidade. 
+
+//? Mantenho como variável mesmo, ou mudo para ponteiro?
+//? Talvez pra funcionalidade de "deletar processo" seja necessário, caso o processo chegue ao final da fila
+Processo novoProcesso(int id, int tempo_servico, int tempo_restante, int prioridade);
+
+void mostraProcesso(Processo p);
 
 #endif
