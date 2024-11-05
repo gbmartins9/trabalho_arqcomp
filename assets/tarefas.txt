@@ -1,6 +1,38 @@
 Tarefas para fazer:
  
-1 - Definir como serão tratados os processos no programa OK
+1 - Definir como serão tratados os processos no programa FEITO
+
 2 - Definir considerações iniciais (as do PDF)
+
 3 - Definir algoritmo principal para o escalonador
+
 4 - Definir entrada/saída de processos
+
+5 - Definir funcionamento das filas -> Praticamente feito, apenas algumas considerações:
+    a. Como vamos tratar a prioridade das filas, e quantas serão?
+
+6 - Precisamos de alguma biblioteca para simular o tempo? Como isso será realmente feito?
+
+
+7 - Definição do algoritmo:
+
+    a. Começamos calculando nosso critério de parada (qualquer que seja)
+    b. Ordenamos os processos que temos por ordem de chegada (instante de ativação), caso já não estejam ordenados. 
+    c. Para cada quantum passado, vemos quantos dos processos chegaram na fila. Não sei ao certo como faremos isso, talvez um vetor que então é ordenado pela prioridade e vai para fila de fato?
+    d. Selecionamos o processo no topo da fila de alta prioridade. Se não tiver ninguém, usamos a fila de baixa prioridade. 
+    e. Calculamos quanto tempo aquele processo usará do processador, e portanto o que ocorreu no tempo passado.
+    f. Fazemos isso até o critério de parada. 
+
+    Alternativamente, simplesmente passamos de 1 em 1 segundo vendo o que ocorreu. Não sei exatamente como ela quer o output, e nem o que seria mais fácil. 
+
+8 - Definição de prioridade: A prioridade será um número entre 1 e 5 (por exemplo), ou simplesmente BAIXA/ALTA?
+
+9 - Tinha pensado em fazer o loop principal como "while(ainda tiver gente na fila), mas depois percebi que a fila pode estar vazia, 
+    mas ter gente que ainda nem chegou na fila (tipo a fila ficar vazia entre os tempos 20 - 50, mas no 50 aparece alguém).
+    Acho que temos duas outras possibilidades: calcular o tempo total logo no início, ou simplesmente contar quantos processos temos
+    inicialmente e quantos já terminaram. 
+    
+    Creio que a segunda opção seja mais fácil de implementar, mas não sei se perde a ideia do simulador. Calcular o tempo total também
+    não seria muito difícil."
+
+10 - 
