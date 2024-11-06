@@ -13,7 +13,6 @@ typedef struct no {
 typedef struct {
     No *inicio;
     No *fim;
-    int identificador; //! Não sei se precisa ou não, pois temos que definir como será a prioridade de fato. 
 } Fila;
 
 //Inicializa uma Fila, colocando seus ponteiros para NULL.

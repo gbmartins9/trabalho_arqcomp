@@ -6,11 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 /*DEFINIÇÕES*/
 
 //Definições de tags para o código.
-#define QUANTUM 1
+#define QUANTUM 5
+#define MAX_PROCESSES 5
+
 #define MAX_IO 10
 
 //! Se tirar o identificador, tirar isso
@@ -44,6 +45,7 @@ typedef struct {
     Tipo_IO tipo; 
     int tempo_execucao;
     int tempo_ativacao;
+    int tempo_retorno;
 } IO;
 
 typedef struct {
@@ -52,16 +54,19 @@ typedef struct {
     int tempo_restante;
     int instante_ativacao;
     int prioridade;
-    //IO lista_io[MAX_IO]; //* Tirei momentaneamente para testar os processos.
+    int quantidade_io;
+    IO *io; 
 } Processo;
 
 /*FUNÇÕES*/
+
+IO novoIO(Tipo_IO tipo, int tempo_execucao, int tempo_ativacao);
 
 //? Não sei se deixo aqui, ou se movo para outro arquivo header depois. Por enquanto deixarei aqui por simplicidade. 
 
 //? Mantenho como variável mesmo, ou mudo para ponteiro?
 //? Talvez pra funcionalidade de "deletar processo" seja necessário, caso o processo chegue ao final da fila
-Processo novoProcesso(int id, int tempo_servico, int prioridade);
+Processo novoProcesso(int id, int tempo_servico, int prioridade, int quantidade_io, IO *io);
 
 void mostraProcesso(Processo p);
 

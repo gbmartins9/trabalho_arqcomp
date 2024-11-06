@@ -6,7 +6,7 @@
 ? checaremos após criarmos a fila se f retornou NULL ou não.
 */
 
-Fila *inicializaFila(int identificador) {
+Fila *inicializaFila() {
     Fila *f = (Fila *) malloc(sizeof(Fila));
     if (f == NULL) {
         return NULL;
@@ -14,7 +14,6 @@ Fila *inicializaFila(int identificador) {
     else {
         f->inicio = NULL;
         f->fim = NULL;
-        f->identificador = identificador;
         return f;
     }
 }
@@ -68,26 +67,46 @@ bool inserirFila(Fila *f, Processo p) {
 }
 
 bool removerFila(Fila *f, Processo *p) {
-    if (f == NULL || f->inicio == NULL) {
+    if (f == NULL || f->inicio == NULL || p == NULL) {
         return false;
     }
-    else {
-        No *deletar = f->inicio;
-        *p = f->inicio->processo;
-        f->inicio = f->inicio->proximo_processo;
 
-        if (f->inicio == NULL) {
-            f->fim = NULL;
-        }
+    No *atual = f->inicio;
+    No *anterior = NULL;
 
-        free(deletar);
-        return true;        
+    // Percorre a fila até encontrar o processo com o mesmo ID
+    while (atual != NULL && atual->processo.id != p->id) {
+        anterior = atual;
+        atual = atual->proximo_processo;
     }
+
+    // Se o processo não foi encontrado, retorna false
+    if (atual == NULL) {
+        return false;
+    }
+
+    // Se o processo está no início da fila
+    if (anterior == NULL) {
+        f->inicio = atual->proximo_processo;
+    } else {
+        anterior->proximo_processo = atual->proximo_processo;
+    }
+
+    // Se o processo está no fim da fila, atualiza f->fim
+    if (atual == f->fim) {
+        f->fim = anterior;
+    }
+
+    free(atual);
+    return true;
 }
+
+
+
 
 void mostrarFila(Fila *f) {
     No *aux = f->inicio;
-    printf("Fila %d: ", f->identificador);
+    printf("Fila : ");
     while (aux != NULL) {
         printf(" [%d] ", aux->processo.id);
         aux = aux->proximo_processo;

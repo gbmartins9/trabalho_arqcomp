@@ -20,3 +20,16 @@
         Processos que sofreram preempcao  retornam na fila de baixa prioridade.
 
     OBS: As premissas estabelecidas pelo grupo devem estar explicitadas no relatorio.
+
+====================================================================================================
+
+ESCOLHAS:
+    -> Limite de processos: 5
+    -> Fatia de tempo (Quantum): 5
+    -> Input dos tempos de serviço e de ativação dos IOs: Leitura de um arquivo txt
+    -> Tempo de duração de cada IO:
+        -> Disco: 7 unidades de tempo
+        -> Fita magnética: 8 unidades de tempo 
+        -> Impressora: 4 unidades de tempo
+    -> Gerência de Processos: IDS serão de 1 até 5 (máximo de processos), e teremos apenas 3 filas (1 de alta prioridade, 1 de baixa prioridade, e 1 geral para I/O)
+    -> O restante está como especificado nas premissas pré-estabelecidas
