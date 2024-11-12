@@ -3,15 +3,16 @@
 //TODO: Também temos que garantir que tempo restante <= tempo de serviço sempre. 
 //TODO: Implementar instante de ativação corretamente.
 //TODO: Implementar inicialização da lista de IOs. 
-Processo novoProcesso(int id, int tempo_servico, int prioridade, int quantidade_io, IO io[]) {
+Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int prioridade, int quantidade_io, IO io[]) {
     Processo p;
     p.id = id;
     p.tempo_servico = tempo_servico; 
     p.tempo_restante = tempo_servico; 
     p.prioridade = prioridade;
-    p.instante_ativacao = 0; //! MUDAR
+    p.instante_ativacao = instante_ativacao;
     if (io != NULL) {p.io = io;}
     p.quantidade_io = quantidade_io;
+    p.estado = NOVO; // Estado inicial
     return p;
 }
 
