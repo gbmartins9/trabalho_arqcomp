@@ -22,21 +22,45 @@ void adicionarProcessosProntos(Fila *pendentes, Fila *execucao, int tempo) {
 }
 
 // Algoritmo Round Robin com enum Estado
-void roundRobin(Fila *pendentes, int quantum) {
-    Fila *execucao = inicializaFila(); // Fila de processos prontos
+void roundRobin(Fila *alta, int quantum) {
+
+    Fila *alta = inicializaFila();
+    Fila *IO = inicializarFila();
+    Fila *prontos = inicializarFila();
+    Fila *baixa = inicializarFila();
     int tempo = 0;
 
-    while (pendentes->inicio != NULL || execucao->inicio != NULL) {
-        // Adiciona processos prontos à fila de execução
-        adicionarProcessosProntos(pendentes, execucao, tempo);
+    // Adiciona processos prontos à fila de execução
+    adicionarProcessosProntos(alta, prontos, tempo);
 
-        if (execucao->inicio != NULL) {
-            No *atual = execucao->inicio;
+    while (alta->inicio != NULL || prontos->inicio != NULL) { // REVER A CONDICAO DE PARADA
+        
+        if (prontos->inicio != NULL) {
+            No *atual = prontos->inicio;
             atual->processo.estado = EXECUTANDO; // Atualiza para EXECUTANDO
 
             int execucao_tempo = (atual->processo.tempo_restante > quantum) ? quantum : atual->processo.tempo_restante;
             printf("Tempo %d: Executando Processo %d por %d unidades de tempo\n", tempo, atual->processo.id, execucao_tempo);
             
+            // Aqui vamos calcular o quantum que o processo vai usar (isto é, verificar se ele será interrompido por I/O.
+            for (int i=0;i<atual->processo.quantidade_io;i++){
+                // Assumindo que nossa lista de IOs esta ordenada.
+                if (atual->processo.io[i].tempo_ativacao >= tempo && atual->processo.io[i].tempo_ativacao >= tempo + quantum) {
+                    execucao_tempo = atual->processo.io[i].tempo_ativacao; // REVER PARA MAIS DE IO
+                    atual->processo.tempo_ativacao = tempo + atual->processo.io[i].tempo_execucao + atual->processo.io[i].tempo_ativacao;
+                    removerFila(prontos, &atual->processo);
+                    inserirFilaIO(IO);
+                    break; // VERIFICAR
+                }
+            }
+
+            // Vamos encontrar os processos com menor instante de ativação dentro do quantum. Se houver empate, usamos os critérios Novos - I/O - Preempção.
+            for (int i=tempo; i<=execucao_tempo;i++) {
+                // Tem alguem com instante de ativacao == i na fila de Novos? Entao insere
+                // Tem alguem com instante de ativacao == i na fila de IO? Entao insere
+                // Tem alguem com instante de ativacao == i na fila de Preempcao? Entao insere
+            }
+         
             tempo += execucao_tempo;
             atual->processo.tempo_restante -= execucao_tempo;
 
@@ -73,12 +97,23 @@ int main() {
         return -1;
     }
 
+    IO io1 = novoIO(0, 7, 2);
+    IO io2 = novoIO(1, 8, 5);
+    IO io3 = novoIO(2, 4, 1);
+    IO io4 = novoIO(1, 8, 10);
+    IO empty[] = {};
+    IO lista_io1[] = {io1};
+    IO lista_io2[] = {io2};
+    IO lista_io3[] = {io3};
+    IO lista_io4[] = {io4};
+
+
     // Adiciona processos com diferentes instantes de ativação
-    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, 0, NULL));
-    inserirFila(pendentes, novoProcesso(2, 11, 4, 1, 0, NULL));
-    inserirFila(pendentes, novoProcesso(3, 7, 5, 1, 0, NULL));
-    inserirFila(pendentes, novoProcesso(4, 8, 7, 1, 0, NULL));
-    inserirFila(pendentes, novoProcesso(5, 16, 10, 1, 0, NULL));
+    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, 1, lista_io1));
+    inserirFila(pendentes, novoProcesso(2, 11, 4, 1, 1, lista_io2));
+    inserirFila(pendentes, novoProcesso(3, 7, 5, 1, 1, lista_io3));
+    inserirFila(pendentes, novoProcesso(4, 8, 7, 1, 1, lista_io4));
+    inserirFila(pendentes, novoProcesso(5, 16, 10, 1, 1, lista_io4));
 
     int quantum = 2;
     roundRobin(pendentes, quantum);
