@@ -32,6 +32,9 @@ bool inserirFila(Fila *f, Processo p);
 //Passamos processo como ponteiro para armazená-lo, caso seja necessário 
 //Colocá-lo novamente na Fila. 
 bool removerFila(Fila *f, Processo *p);
+// bool removerFilaTopo(Fila *f, Processo *p);
+Processo removerFila2(Fila *f);
+Processo removerFila3(Fila *f, int id);
 
 //Função para mostrar todos os processos da fila. 
 void mostrarFila(Fila *f, const char *nome);
@@ -39,5 +42,13 @@ void mostrarFila(Fila *f, const char *nome);
 //Para cada elemento de f2, passa esse elemento para f1. 
 //O que faz na prática e fazer o final de f1 apontar para o início de f2, e então zerar f2
 bool atualizaPrioridade(Fila *f1, Fila *f2); //! TIRAR POIS NÃO TROCAM DE PRIORIDADE!!!
+
+void inserirFilaIO(Processo *p, int i, int tempo_atual);
+void removerFilaIO(Processo *p, int i);
+
+Fila *fila_baixa;
+Fila *fila_alta;
+Fila *io;
+
 
 #endif

@@ -97,23 +97,23 @@ void inserirFilaIO(Processo *p, int i, int tempo_atual) {
     p->io[i].tempo_retorno = tempo_atual + p->io[i].tempo_execucao;
 }
 
-//Função que remove um processo da fila de IO e o redireciona para a fila correta.
-void removerFilaIO(Processo *p, int i) {
-    int tipoIO = p->io[i].tipo;
-    //! INCONSISTÊNCIA: ESTAMOS REMOVENDO UM CARA ESPECÍFICO MAS A FILA REMOVE O PRIMEIRO
-    removerFila(io, p);
-    switch (tipoIO) {
-        case 0:
-            inserirFila(fila_baixa, *p);
-            printf("Processo %d completou I/O de disco e foi para fila de baixa prioridade\n", p->id);
-            break;
-        case 1:
-            inserirFila(fila_alta, *p);
-            printf("Processo %d completou I/O de fita e foi para fila de baixa prioridade\n", p->id);
-            break;
-        case 2:
-            inserirFila(fila_alta, *p);
-            printf("Processo %d completou I/O de impressora e foi para fila de baixa prioridade\n", p->id);
-            break;
-    }
-}
+// //Função que remove um processo da fila de IO e o redireciona para a fila correta.
+// void removerFilaIO(Processo *p, int i) {
+//     int tipoIO = p->io[i].tipo;
+//     //! INCONSISTÊNCIA: ESTAMOS REMOVENDO UM CARA ESPECÍFICO MAS A FILA REMOVE O PRIMEIRO
+//     removerFilaProcesso(io, p); 
+//     switch (tipoIO) {
+//         case 0:
+//             inserirFila(fila_baixa, *p);
+//             printf("Processo %d completou I/O de disco e foi para fila de baixa prioridade\n", p->id);
+//             break;
+//         case 1:
+//             inserirFila(fila_alta, *p);
+//             printf("Processo %d completou I/O de fita e foi para fila de baixa prioridade\n", p->id);
+//             break;
+//         case 2:
+//             inserirFila(fila_alta, *p);
+//             printf("Processo %d completou I/O de impressora e foi para fila de baixa prioridade\n", p->id);
+//             break;
+//     }
+// }

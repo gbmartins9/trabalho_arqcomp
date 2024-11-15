@@ -101,6 +101,60 @@ bool removerFila(Fila *f, Processo *p) {
     return true;
 }
 
+Processo removerFila3(Fila *f, int id) {
+    if (f == NULL || f->inicio == NULL) {
+        Processo p_vazio = {0}; // Retorna um processo vazio indicando falha
+        return p_vazio;
+    }
+
+    No *atual = f->inicio;
+    No *anterior = NULL;
+
+    // Percorre a fila até encontrar o processo com o mesmo ID
+    while (atual != NULL && atual->processo.id != id) {
+        anterior = atual;
+        atual = atual->proximo_processo;
+    }
+
+    // Se o processo não foi encontrado, retorna um processo vazio
+    if (atual == NULL) {
+        Processo p_vazio = {0};
+        return p_vazio;
+    }
+
+    // Se o processo está no início da fila
+    if (anterior == NULL) {
+        f->inicio = atual->proximo_processo;
+    } else {
+        anterior->proximo_processo = atual->proximo_processo;
+    }
+
+    // Se o processo está no fim da fila, atualiza f->fim
+    if (atual == f->fim) {
+        f->fim = anterior;
+        if (anterior != NULL) {
+            anterior->proximo_processo = NULL;
+        }
+    }
+
+    Processo p = atual->processo;
+    printf("Processo: %d\n", p.id);
+
+    free(atual);
+    return p;
+}
+
+
+Processo removerFila2(Fila *f) {
+    if (f->inicio == NULL) return;
+    Processo p = f->inicio->processo;
+    No *deletar = f->inicio;
+    f->inicio = f->inicio->proximo_processo;
+    free(deletar);
+    if(f->inicio == NULL) f->fim = NULL;
+    return p;
+}
+
 
 
 
@@ -115,26 +169,31 @@ void mostrarFila(Fila *f, const char *nome) {
 }
 
 
-//! TIRAR ESSA FUNÇÃO
-/*
-? OBS: se tirarmos as checagens de f1 == NULL ou f2 == NULL, acho que podemos 
-? fazer retornar void.
-*/ 
-bool atualizaPrioridade(Fila *f1, Fila *f2) {
-    if (f1 == NULL || f2 == NULL) {
-        return false;
-    }
-    else {
-        if (f1->inicio == NULL) {
-            f1->inicio = f2->inicio;
-            f1->fim = f2->fim;
-        }
-        else {
-            f1->fim->proximo_processo = f2->inicio;
-            f1->fim = f2->fim;
-        } 
-        f2->inicio = NULL;
-        f2->fim = NULL;
-        return true;
+//Função que adiciona o processo na fila de IO, calculando o tempo de retorno com base no tempo atual
+void inserirFilaIO(Processo *p, int i, int tempo_atual) {
+    inserirFila(io, *p);
+    printf("Processo P%d foi para fila de I/O\n", p->id);
+    p->io[i].tempo_retorno = tempo_atual + p->io[i].tempo_execucao;
+}
+
+//Função que remove um processo da fila de IO e o redireciona para a fila correta.
+void removerFilaIO(Processo *p, int i) {
+    int tipoIO = p->io[i].tipo;
+    //! INCONSISTÊNCIA: ESTAMOS REMOVENDO UM CARA ESPECÍFICO MAS A FILA REMOVE O PRIMEIRO    
+    //removerFila(io, p);
+    Processo temp = removerFila3(io, p->id);
+    switch (tipoIO) {
+        case 0:
+            inserirFila(fila_baixa, temp);
+            printf("Processo %d completou I/O de disco e foi para fila de baixa prioridade\n", temp.id);
+            break;
+        case 1:
+            inserirFila(fila_alta, temp);
+            printf("Processo %d completou I/O de fita e foi para fila de baixa prioridade\n", temp.id);
+            break;
+        case 2:
+            inserirFila(fila_alta, temp);
+            printf("Processo %d completou I/O de impressora e foi para fila de baixa prioridade\n", temp.id);
+            break;
     }
 }
