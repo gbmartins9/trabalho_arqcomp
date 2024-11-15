@@ -104,9 +104,9 @@ bool removerFila(Fila *f, Processo *p) {
 
 
 
-void mostrarFila(Fila *f) {
+void mostrarFila(Fila *f, const char *nome) {
     No *aux = f->inicio;
-    printf("Fila : ");
+    printf("Fila %s: ", nome);
     while (aux != NULL) {
         printf(" [%d] ", aux->processo.id);
         aux = aux->proximo_processo;

@@ -33,3 +33,8 @@ ESCOLHAS:
         -> Impressora: 4 unidades de tempo
     -> Gerência de Processos: IDS serão de 1 até 5 (máximo de processos), e teremos apenas 3 filas (1 de alta prioridade, 1 de baixa prioridade, e 1 geral para I/O)
     -> O restante está como especificado nas premissas pré-estabelecidas
+
+ORDEM DE ENTRADA:
+    -> novo
+    -> IO 
+    -> preempcao

@@ -34,7 +34,7 @@ bool inserirFila(Fila *f, Processo p);
 bool removerFila(Fila *f, Processo *p);
 
 //Função para mostrar todos os processos da fila. 
-void mostrarFila(Fila *f);
+void mostrarFila(Fila *f, const char *nome);
 
 //Para cada elemento de f2, passa esse elemento para f1. 
 //O que faz na prática e fazer o final de f1 apontar para o início de f2, e então zerar f2

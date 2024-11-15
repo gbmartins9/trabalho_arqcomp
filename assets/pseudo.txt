@@ -1,0 +1,25 @@
+O QUE FAZER A CADA TEMPO:
+
+    1. Checar se temos algum processo novo que chegou
+        -> Verificar se o instante de ativação do processo eh igual ao tempo corrente
+        -> Insere na alta
+
+    2. Verificar se o tempo de retorno de algum I/O eh igual ao tempo corrente
+        -> Insere na fila de alta/baixa dependendo do I/O (insereFilaIO)
+
+    3. Selecionar a proxima fila de execucao 
+        -> Se nao tiver vazia, alta. Caso contrário, baixa.
+
+    4. Checar se o processo atual continuara executando ou sofrerá preempção/IO
+        4.1 Verificar se o processo já acabou 
+            -> Se tiver acabado, incrementa "processos_concluidos"
+            -> Seleciona o próximo da fila de alta/baixa prioridade
+
+        4.2 Verificar se o processo tem IO
+            -> Se o processo tem, checar se o tempo de ativação do IO dele é o tempo atual 
+                -> Se sim, colocar na Fila de IO (inserirFilaIO)
+                -> Calcular tempo de retorno do I/O daquele processo.
+
+        4.3 Comparar o tempo em que o processo ja esteve executando com o Quantum máximo
+            -> Checar variável "count" para ver se é igual ao Quantum. 
+                -> Se for, "count" = 0 e o processo volta para fila de alta/baixa
