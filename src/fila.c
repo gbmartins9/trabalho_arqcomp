@@ -138,7 +138,7 @@ Processo removerFila3(Fila *f, int id) {
     }
 
     Processo p = atual->processo;
-    printf("Processo: %d\n", p.id);
+    // printf("Processo: %d\n", p.id);
 
     free(atual);
     return p;

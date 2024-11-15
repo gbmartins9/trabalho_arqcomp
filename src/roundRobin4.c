@@ -26,7 +26,6 @@ int roundRobin() {
     fila_baixa = inicializaFila();
     io = inicializaFila();
 
-
     // Adiciona processos com diferentes instantes de ativação
     inserirFila(pendentes, novoProcesso(1, 13, 0, 1, 1, lista_io1));
     inserirFila(pendentes, novoProcesso(2, 11, 1, 1, 0, empty));
@@ -92,43 +91,47 @@ int roundRobin() {
         //* 4. Checar se o processo atual continuará executando ou sofrerá preempção/IO
         
         //* 4.1 Checar se o processo já acabou
-        if(processo_atual->tempo_restante == 0) {
-            count = 0;
-            processos_concluidos++;
-            Processo p = removerFila2(fila_atual);
-            //removerFila(fila_atual, processo_atual); //Não precisaria armazenar o processo sendo tirado, mas tá aí por causa da função
-            printf("Processo P%d concluido.\n", p.id);
-        }
+        // if(processo_atual->tempo_restante == 0) {
+        //     count = 0;
+        //     processos_concluidos++;
+        //     Processo p = removerFila2(fila_atual);
+        //     //removerFila(fila_atual, processo_atual); //Não precisaria armazenar o processo sendo tirado, mas tá aí por causa da função
+        //     printf("Processo P%d concluido.\n", p.id);
+        // }
+
+        bool troca = false;
 
         //* 4.2 Verificar se o processo tem IO
-        else if (processo_atual->quantidade_io != 0) {
+        if (processo_atual->quantidade_io != 0) {
             //Percorrer vetor de IO do processo.
-            
-            bool teste = false;
+    
+            //! bool teste = false;
 
             for (int i = 0; i < processo_atual->quantidade_io ; i++) {
                 if(tempo == processo_atual->io[i].tempo_ativacao) {
                     Processo p = removerFila2(fila_atual);
                     // removerFila(fila_atual, processo_atual);
                     inserirFilaIO(&p, i, tempo);
-                    printf("Processo P%d entrou em IO.\n", p.id);
+                    //printf("Processo P%d entrou em IO.\n", p.id);
                     count = 0;  
-                    teste = true;
+                    //! teste = true;
+                    troca = true;
                     break;
                 }
             }
-            if(teste == false) {
-                processo_atual->tempo_restante--; 
+            // if(teste == false) {
+            //     processo_atual->tempo_restante--; 
 
-                count++;
-                tempo++;
-                printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
-            }
+            //     count++;
+            //     tempo++;
+            //     printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
+            // }
             //!! SE ISSO EXECUTAR MAS SAIR DO FOR, TEM QUE EXECUTAR O ELSE TAMBÉM 
         }
 
         //* 4.3 Comparar o tempo em que o processo já esteve executando com o Quantum máximo
         else if (count == QUANTUM) {
+            troca = true;
             count = 0;
             Processo p = removerFila2(fila_atual);
             //processo_atual = removerFila2(fila_atual);
@@ -136,12 +139,23 @@ int roundRobin() {
             printf("Quantum atingido. Processo P%d movido para fila de baixa prioridade.\n", p.id);
         } 
 
-        else {
+        if (troca == false) {
             //Se nada aconteceu, então o processo continua executando, e count é incrementado
             processo_atual->tempo_restante--;
-            tempo++;
-            count++;
-            printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
+
+            // mostraProcesso(*processo_atual);
+
+            if(processo_atual->tempo_restante == 0) {
+                count = 0;
+                processos_concluidos++;
+                Processo p = removerFila2(fila_atual);
+                printf("Processo p%d Concluido.\n", p.id);
+            }
+            else {
+                count++;
+                tempo++;
+                printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
+            }
         }
     }
     printf("\n=== Todos os processos foram concluídos em %d unidades de tempo. ===\n", tempo);
