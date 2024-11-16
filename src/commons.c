@@ -1,5 +1,6 @@
 #include "../include/commons.h"
 
+
 //! TEMOS QUE VER O QUE OCORRE NOS CASOS DEGENERADOS
 //! PROPONHO AVISAR QUE NÃO SERÁ EXECUTADO AQUELE IO, MAS CONTINUAR COM 
 //! O SIMULADOR
@@ -49,8 +50,6 @@ IO novoIO(Tipo_IO tipo, int tempo_ativacao) {
 }
 
 Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int quantidade_io, IO io[]) {
-
-    //Criamos um novo processo
     Processo p;
 
     //Definimos os atributos básicos do processo
@@ -77,7 +76,7 @@ Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int quan
         p.quantidade_io = 0;
         p.io = NULL;
     }
-
+  
     //Então, retornamos o processo p
     return p;
 }
