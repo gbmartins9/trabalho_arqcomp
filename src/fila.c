@@ -191,11 +191,11 @@ void removerFilaIO(Processo *p, int i) {
             break;
         case 1:
             inserirFila(fila_alta, temp);
-            printf("-> Processo P%d completou I/O de fita e foi para fila de baixa prioridade\n", temp.id);
+            printf("-> Processo P%d completou I/O de fita e foi para fila de alta prioridade\n", temp.id);
             break;
         case 2:
             inserirFila(fila_alta, temp);
-            printf("-> Processo P%d completou I/O de impressora e foi para fila de baixa prioridade\n", temp.id);
+            printf("-> Processo P%d completou I/O de impressora e foi para fila de alta prioridade\n", temp.id);
             break;
     }
 }

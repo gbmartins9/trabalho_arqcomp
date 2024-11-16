@@ -1,74 +1,57 @@
 #ifndef COMMONS_H
 #define COMMONS_H
 
-/*BIBLIOTECAS E HEADERS*/
+//*BIBLIOTECAS E HEADERS*//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-/*DEFINIÇÕES*/
+//*DEFINIÇÕES*//
 
-//Definições de tags para o código.
-#define QUANTUM 5
-#define MAX_PROCESSES 5
-
-#define MAX_IO 10
-
-//! Se tirar o identificador, tirar isso
-#define PRIORIDADE_BAIXA 0
-#define PRIORIDADE_ALTA 1
-
-//! Se não usar tira
-#define TAMANHO_MAX_STRING 10
-
+//Definição de booleano
 #define bool int
 #define true 1
 #define false 0
 
-//Definições dos estados do processo.
-//Usando modelo de 5 estados. 
-typedef enum {
-    NOVO,
-    PRONTO,
-    EXECUTANDO,
-    FINALIZADO,
-    BLOQUEADO
-} Estado;
+//Definições de tags para o código
+//Usadas de acordo com as premissas
+#define QUANTUM 5
+#define MAX_PROCESSES 5
+#define MAX_IO 10 //? Tirar
 
+//Definição do tipo de enum, usando um IO
 typedef enum {
-    disco = 0,
-    fita = 1,
-    impressora = 2
+    DISCO = 0,
+    FITA = 1,
+    IMPRESSORA = 2
 } Tipo_IO;
 
+//Definição da struct IO
+//Usado para representar os IOs de cada processo 
 typedef struct {
-    Tipo_IO tipo; 
+    Tipo_IO tipo;
     int tempo_execucao;
     int tempo_ativacao;
     int tempo_retorno;
 } IO;
 
+//Definição da struct Processo
 typedef struct {
     int id;
     int tempo_servico;
     int tempo_restante;
     int instante_ativacao;
-    int prioridade;
     int quantidade_io;
-    Estado estado; 
     IO *io; 
 } Processo;
 
-/*FUNÇÕES*/
+//*FUNÇÕES*//
 
+//Função para instanciar um novo IO dentro do Processo
 IO novoIO(Tipo_IO tipo, int tempo_ativacao);
 
-//? Não sei se deixo aqui, ou se movo para outro arquivo header depois. Por enquanto deixarei aqui por simplicidade. 
-
-//? Mantenho como variável mesmo, ou mudo para ponteiro?
-//? Talvez pra funcionalidade de "deletar processo" seja necessário, caso o processo chegue ao final da fila
-Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int prioridade, int quantidade_io, IO *io);
-
-void mostraProcesso(Processo p);
+//Função para instanciar um novo Processo
+Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int quantidade_io, IO *io);
 
 #endif

@@ -25,11 +25,11 @@ int roundRobin() {
     IO lista_ioP2[] = {novoIO(1, 6), novoIO(0, 6)};
     IO lista_ioP5[] = {novoIO(0, 2), novoIO(1, 7)};
 
-    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, 1, lista_ioP1));
-    inserirFila(pendentes, novoProcesso(2, 11, 4, 1, 2, lista_ioP2));
-    inserirFila(pendentes, novoProcesso(3, 7, 5, 1, 0, empty));
-    inserirFila(pendentes, novoProcesso(4, 8, 7, 1, 0, empty));
-    inserirFila(pendentes, novoProcesso(5, 16, 10, 1, 2, lista_ioP5));
+    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, lista_ioP1));
+    inserirFila(pendentes, novoProcesso(2, 11, 4, 2, lista_ioP2));
+    inserirFila(pendentes, novoProcesso(3, 7, 5, 0, empty));
+    inserirFila(pendentes, novoProcesso(4, 8, 7, 0, empty));
+    inserirFila(pendentes, novoProcesso(5, 16, 10, 2, lista_ioP5));
 
 
     //TODO: Função que pega todos os processos no arquivo e joga para essa fila
