@@ -1,0 +1,207 @@
+*CHINES DA QUESTÃO 1 DA LISTA 3*
+
+=== Tempo 0 - 1 ===
+
+Alta: P1, P2, P3, P4, P5
+Baixa:
+IO: 
+
+-> P1 
+    10 -> 9
+count = 1
+
+=== Tempo 1 - 2 ===
+
+Alta: P1, P2, P3, P4, P5
+Baixa:
+IO: 
+
+-> P1 
+    9 -> 8
+count = 2
+
+=== Tempo 2 - 3 ===
+
+Alta: P1, P2, P3, P4, P5
+Baixa:
+IO: 
+
+-> P1 
+    8 -> 7
+count = 3
+
+=== Tempo 3 - 4 ===
+
+Alta: P1, P2, P3, P4, P5
+Baixa:
+IO: 
+
+-> P1 
+    7 -> 6
+count = 4
+
+
+=== Tempo 4 - 5 ===
+
+Alta: P1, P2, P3, P4, P5
+Baixa:
+IO: 
+
+-> P1 
+    6 -> 5
+count = 5
+
+-> P1 para baixa 
+
+=== Tempo 5 - 6 ===
+
+Alta: P2, P3, P4, P5
+Baixa: P1  
+IO: 
+
+-> P2
+    1 -> 0
+P2 Concluído 
+
+
+=== Tempo 6 - 7 ===
+
+Alta: P3, P4, P5
+Baixa: P1 
+IO: 
+
+-> P3 
+    2 -> 1 
+
+
+=== Tempo 7 - 8 ===
+
+Alta: P3, P4, P5
+Baixa: P1 
+IO: 
+
+-> P3 
+    1 -> 0
+P3 Concluído 
+
+
+=== Tempo 8 - 9 ===
+
+Alta: P4, P5
+Baixa: P1 
+IO: 
+
+-> P4 
+    1 -> 0
+P4 Concluído 
+
+
+=== Tempo 9 - 10 ===
+
+Alta: P5
+Baixa: P1 
+IO: 
+
+-> P5 
+    5 -> 4
+count = 1
+
+=== Tempo 10 - 11 ===
+
+Alta: P5
+Baixa: P1 
+IO: 
+
+-> P5 
+    4 -> 3
+count = 2
+
+=== Tempo 11 - 12 ===
+
+Alta: P5
+Baixa: P1 
+IO: 
+
+-> P5 
+    3 -> 2
+count = 3
+
+=== Tempo 12 - 13 ===
+
+Alta: P5
+Baixa: P1 
+IO: 
+
+-> P5 
+    2 -> 1
+count = 4
+
+=== Tempo 13 - 14 ===
+
+Alta: P5  
+Baixa: P1 
+IO: 
+
+-> P5 
+    1 -> 0
+count = 5
+P5 Concluído! 
+
+=== Tempo 14 - 15 ===
+
+Alta: 
+Baixa: P1 
+IO: 
+
+-> P1  
+    5 -> 4
+count = 1
+
+=== Tempo 15 - 16 ===
+
+Alta: 
+Baixa: P1 
+IO: 
+
+-> P1  
+    4 -> 3
+count = 2
+
+=== Tempo 16 - 17 ===
+
+Alta: 
+Baixa: P1 
+IO: 
+
+-> P1  
+    3 -> 2
+count = 3
+
+=== Tempo 17 - 18 ===
+
+Alta: 
+Baixa: P1 
+IO: 
+
+-> P1  
+    2 -> 1 
+count = 4
+
+=== Tempo 18 - 19 ===
+
+Alta: 
+Baixa: P1 
+IO: 
+
+-> P1  
+    1 -> 0 
+count = 5
+P1 Concluído!
+
+=== Tempo 19 ===
+
+Alta: 
+Baixa: 
+IO: 
+
+Concluído em 19 unidades de tempo!
