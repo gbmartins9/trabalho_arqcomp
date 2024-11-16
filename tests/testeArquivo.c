@@ -1,13 +1,3 @@
-/*
-TODO DE LEITURA DE ARQUIVOS
-
--> Leitura e identificação dos 5 processos
--> Identificadores e tempos de serviço e ativação
--> Precisamos pegar todos os IOs de cada processo, 
-    suas características, e contar quantos são por processo
-
-*/
-
 #include "../include/commons.h"
 #include "../include/fila.h"
 
@@ -61,3 +51,9 @@ Fila* leituraTeste(char *nome_teste) {
     return pendentes;
 }
 
+int main() {
+    
+    Fila *pendentes = leituraTeste("tests/1.txt");
+    
+    return 0;
+}
