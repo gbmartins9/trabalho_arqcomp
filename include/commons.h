@@ -61,7 +61,7 @@ typedef struct {
 
 /*FUNÇÕES*/
 
-IO novoIO(Tipo_IO tipo, int tempo_execucao, int tempo_ativacao);
+IO novoIO(Tipo_IO tipo, int tempo_ativacao);
 
 //? Não sei se deixo aqui, ou se movo para outro arquivo header depois. Por enquanto deixarei aqui por simplicidade. 
 

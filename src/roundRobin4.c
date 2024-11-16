@@ -16,26 +16,20 @@ int roundRobin() {
         return -1;
     }
 
-    IO io1 = novoIO(0, 7, 2);
-    IO io2 = novoIO(1, 8, 5);
-    IO io3 = novoIO(2, 4, 1);
-    IO io4 = novoIO(1, 8, 10);
-    IO empty[] = {};
-    IO lista_io1[] = {io1};
-    IO lista_io2[] = {io2};
-    IO lista_io3[] = {io3};
-    IO lista_io4[] = {io4};
-
     fila_alta = inicializaFila();
     fila_baixa = inicializaFila();
     io = inicializaFila();
+    
+    IO empty[] = {};
+    IO lista_ioP1[] = {novoIO(0, 4)};
+    IO lista_ioP2[] = {novoIO(1, 6), novoIO(0, 6)};
+    IO lista_ioP5[] = {novoIO(0, 2), novoIO(1, 7)};
 
-    // Adiciona processos com diferentes instantes de ativação
-    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, 1, lista_io1));
-    inserirFila(pendentes, novoProcesso(2, 11, 1, 1, 0, empty));
+    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, 1, lista_ioP1));
+    inserirFila(pendentes, novoProcesso(2, 11, 4, 1, 2, lista_ioP2));
     inserirFila(pendentes, novoProcesso(3, 7, 5, 1, 0, empty));
-    //inserirFila(pendentes, novoProcesso(4, 8, 7, 1, 0, empty));
-    //inserirFila(pendentes, novoProcesso(5, 16, 10, 1, 0, empty));
+    inserirFila(pendentes, novoProcesso(4, 8, 7, 1, 0, empty));
+    inserirFila(pendentes, novoProcesso(5, 16, 10, 1, 2, lista_ioP5));
 
 
     //TODO: Função que pega todos os processos no arquivo e joga para essa fila
@@ -48,7 +42,7 @@ int roundRobin() {
     Processo *processo_atual = NULL;
     Fila *fila_atual = NULL;
 
-    while (processos_concluidos != 3) {
+    while (processos_concluidos != MAX_PROCESSES) {
         
         printf("\n=== Tempo: %d - %d ===\n", tempo, tempo + 1);
         
@@ -88,8 +82,9 @@ int roundRobin() {
         }
         else {
             //! Checar se deixaria ocioso.
-            printf("-> Nenhum processo disponível. CPU ociosa.\n");
+            printf("-> Nenhum processo disponivel. CPU ociosa.\n");
             tempo++;
+            continue;
         }
         processo_atual = &(fila_atual->inicio->processo); 
         printf("-> Executando processo P%d:\n\tTempo de servico total: %d\n\tTempo restante antes da operacao: %d.\n", processo_atual->id, processo_atual->tempo_servico, processo_atual->tempo_restante);
@@ -107,7 +102,7 @@ int roundRobin() {
             //! bool teste = false;
 
             for (int i = 0; i < processo_atual->quantidade_io ; i++) {
-                if(tempo == processo_atual->io[i].tempo_ativacao) {
+                if(processo_atual->tempo_servico - processo_atual->tempo_restante == processo_atual->io[i].tempo_ativacao) {
                     Processo p = removerFila2(fila_atual);
                     // removerFila(fila_atual, processo_atual);
                     inserirFilaIO(&p, i, tempo);

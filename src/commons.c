@@ -34,11 +34,27 @@ void mostraProcesso(Processo p) {
     printf("\n");
 }
 
-IO novoIO(Tipo_IO tipo, int tempo_execucao, int tempo_ativacao) {
+IO novoIO(Tipo_IO tipo, int tempo_ativacao) {
     IO io;
     io.tipo = tipo;
-    io.tempo_execucao = tempo_execucao;
+
+    switch(tipo) {
+        case 0:
+            io.tempo_execucao = 7;
+            break;
+        case 1:
+            io.tempo_execucao = 8;
+            break;
+        case 2:
+            io.tempo_execucao = 4;
+            break;
+        default:
+            //TODO: Botar mensagem de que não existe o tipo de IO passado
+            io.tempo_execucao = 0;
+            break;
+    }
+
     io.tempo_ativacao = tempo_ativacao;
-    io.tempo_retorno = 0;
+    io.tempo_retorno = -1;
     return io;
 }
