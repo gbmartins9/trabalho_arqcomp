@@ -172,7 +172,7 @@ void mostrarFila(Fila *f, const char *nome) {
 //Função que adiciona o processo na fila de IO, calculando o tempo de retorno com base no tempo atual
 void inserirFilaIO(Processo *p, int i, int tempo_atual) {
     inserirFila(io, *p);
-    printf("Processo P%d foi para fila de I/O\n", p->id);
+    //printf("Processo P%d foi para fila de I/O\n", p->id);
     p->io[i].tempo_retorno = tempo_atual + p->io[i].tempo_execucao;
 }
 
@@ -182,18 +182,20 @@ void removerFilaIO(Processo *p, int i) {
     //! INCONSISTÊNCIA: ESTAMOS REMOVENDO UM CARA ESPECÍFICO MAS A FILA REMOVE O PRIMEIRO    
     //removerFila(io, p);
     Processo temp = removerFila3(io, p->id);
+    
+    printf("\n");
     switch (tipoIO) {
         case 0:
             inserirFila(fila_baixa, temp);
-            printf("Processo %d completou I/O de disco e foi para fila de baixa prioridade\n", temp.id);
+            printf("-> Processo P%d completou I/O de disco e foi para fila de baixa prioridade\n", temp.id);
             break;
         case 1:
             inserirFila(fila_alta, temp);
-            printf("Processo %d completou I/O de fita e foi para fila de baixa prioridade\n", temp.id);
+            printf("-> Processo P%d completou I/O de fita e foi para fila de baixa prioridade\n", temp.id);
             break;
         case 2:
             inserirFila(fila_alta, temp);
-            printf("Processo %d completou I/O de impressora e foi para fila de baixa prioridade\n", temp.id);
+            printf("-> Processo P%d completou I/O de impressora e foi para fila de baixa prioridade\n", temp.id);
             break;
     }
 }

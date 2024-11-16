@@ -50,14 +50,14 @@ int roundRobin() {
 
     while (processos_concluidos != 3) {
         
-        printf("\n=== Tempo: %d ===\n", tempo);
+        printf("\n=== Tempo: %d - %d ===\n", tempo, tempo + 1);
         
         //* 1. Checar se temos algum processo novo que chegou (inserir na fila de alta prioridade)
         while(pendentes->inicio != NULL && pendentes->inicio->processo.instante_ativacao == tempo) {
             Processo temp = pendentes->inicio->processo;
             removerFila(pendentes, &temp);
             inserirFila(fila_alta, temp);
-            printf("Processo P%d chegou na fila de alta prioridade.\n", temp.id);
+            printf("\n-> Processo P%d chegou na fila de alta prioridade.\n", temp.id);
         }
 
         //* 2. Verificar se o tempo de retorno de algum I/O é igual ao tempo corrente
@@ -66,15 +66,17 @@ int roundRobin() {
             for(int i = 0; i < IOatual->processo.quantidade_io; i++) {
                 if(tempo == IOatual->processo.io[i].tempo_retorno) {
                     removerFilaIO(&(IOatual->processo), i);
-                    printf("Processo P%d retornou do IO.\n", IOatual->processo.id);
+                    //printf("-> Processo P%d retornou do IO.\n", IOatual->processo.id);
                 }
             }
             IOatual = IOatual->proximo_processo;
         }
 
+        printf("\n");
         mostrarFila(fila_alta, "Alta");
         mostrarFila(fila_baixa, "Baixa");
         mostrarFila(io, "I/O");
+        printf("\n");
 
 
         //* 3. Selecionar a proxima fila de execucao 
@@ -86,11 +88,11 @@ int roundRobin() {
         }
         else {
             //! Checar se deixaria ocioso.
-            printf("Nenhum processo disponível. CPU ociosa.\n");
+            printf("-> Nenhum processo disponível. CPU ociosa.\n");
             tempo++;
         }
         processo_atual = &(fila_atual->inicio->processo); 
-        printf("Executando processo P%d.\n", processo_atual->id);
+        printf("-> Executando processo P%d:\n\tTempo de servico total: %d\n\tTempo restante antes da operacao: %d.\n", processo_atual->id, processo_atual->tempo_servico, processo_atual->tempo_restante);
  
         processo_atual->tempo_restante--;
         tempo++;
@@ -109,7 +111,7 @@ int roundRobin() {
                     Processo p = removerFila2(fila_atual);
                     // removerFila(fila_atual, processo_atual);
                     inserirFilaIO(&p, i, tempo);
-                    //printf("Processo P%d entrou em IO.\n", p.id);
+                    printf("-> Processo P%d solicitou IO: \n\t Atingiu o tempo de execucao: %d \n\t Tempo restante apos a operacao: %d.\n", p.id, p.tempo_servico - p.tempo_restante, p.tempo_restante);
                     count = 0;  
                     //! teste = true;
                     troca = true;
@@ -123,7 +125,7 @@ int roundRobin() {
             count = 0;
             processos_concluidos++;
             Processo p = removerFila2(fila_atual);
-            printf("Processo p%d Concluido.\n", p.id);
+            printf("-> Processo P%d Concluido.\n", p.id);
         }
 
         //* 4.3 Comparar o tempo em que o processo já esteve executando com o Quantum máximo
@@ -132,15 +134,23 @@ int roundRobin() {
             Processo p = removerFila2(fila_atual);
             //processo_atual = removerFila2(fila_atual);
             inserirFila(fila_baixa, p); // Sempre para de baixa, de acordo com as premissas
-            printf("Quantum atingido. Processo P%d movido para fila de baixa prioridade.\n", p.id);
+            printf("-> Quantum atingido: \n\tProcesso P%d movido para fila de baixa prioridade\n\tTempo restante apos a operacao: %d\n", p.id, p.tempo_restante);
         }
 
-        else {
-            printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
+        else if (!troca) {
+            printf("-> Processo P%d nao sofreu preempcao nem I/O.\n\tTempo restante apos a operacao: %d.\n", processo_atual->id, processo_atual->tempo_restante);
         }
     }
 
-    printf("\n=== Todos os processos foram concluídos em %d unidades de tempo. ===\n", tempo);
+    printf("\n=== Tempo: %d ===\n", tempo);
+
+    printf("\n");
+    mostrarFila(fila_alta, "Alta");
+    mostrarFila(fila_baixa, "Baixa");
+    mostrarFila(io, "I/O");
+    printf("\n");
+
+    printf("=== Todos os processos foram concluidos em %d unidades de tempo. ===\n", tempo); 
     return 0;
 }
 
