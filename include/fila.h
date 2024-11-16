@@ -46,9 +46,9 @@ bool atualizaPrioridade(Fila *f1, Fila *f2); //! TIRAR POIS NÃO TROCAM DE PRIOR
 void inserirFilaIO(Processo *p, int i, int tempo_atual);
 void removerFilaIO(Processo *p, int i);
 
-extern Fila *fila_baixa;
-extern Fila *fila_alta;
-extern Fila *io;
+Fila *fila_baixa;
+Fila *fila_alta;
+Fila *io;
 
 
 #endif

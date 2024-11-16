@@ -186,8 +186,8 @@ int main() {
     inserirFila(pendentes, p3);
 
     imprimirFila(pendentes, "Pendentes");
-    printf("Iniciando Round Robin com IO.\n");
-    roundRobin(pendentes);
+    // printf("Iniciando Round Robin com IO.\n");
+    // roundRobin(pendentes);
 
     return 0;
 }

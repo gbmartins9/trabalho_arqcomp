@@ -67,7 +67,7 @@ IO novoIO(Tipo_IO tipo, int tempo_execucao, int tempo_ativacao);
 
 //? Mantenho como variável mesmo, ou mudo para ponteiro?
 //? Talvez pra funcionalidade de "deletar processo" seja necessário, caso o processo chegue ao final da fila
-Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int prioridade, int quantidade_io, IO *io);
+Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int quantidade_io, IO *io);
 
 void mostraProcesso(Processo p);
 
