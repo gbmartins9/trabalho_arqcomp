@@ -31,7 +31,7 @@ IO novoIO(Tipo_IO tipo, int tempo_ativacao) {
         default:
             //Se o tipo não for um dos pré-existentes, definimos seu tempo de ativação
             //Como -1, para nunca ser executado, e o retornamos
-            printf("\n-> O tipo de IO passado nao existe! Este IO nao sera executado\n");
+            printf("\nAviso: o tipo de IO passado nao existe! Este IO nao sera executado\n");
             io.tempo_ativacao = -1;
             io.tempo_execucao = 0;
             io.tempo_retorno = -1;
@@ -67,12 +67,15 @@ Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int quan
 
     if (io != NULL) {
         p.io = io;
-    }
-
-    for (int i = 1; i <= quantidade_io; i++) {
-        if(tempo_servico < p.io[i-1].tempo_ativacao) {
-            printf("\n-> O tempo de ativacao do IO %d do processo P%d supera seu tempo de servico\nEste IO nao sera executado!\n", i, id);
+        for (int i = 1; i <= quantidade_io; i++) {
+            if(tempo_servico < p.io[i-1].tempo_ativacao) {
+                printf("\nAviso: o tempo de ativacao do IO %d do processo P%d supera seu tempo de servico\nEste IO nao sera executado!\n", i, id);
+            }
         }
+    }
+    else {
+        p.quantidade_io = 0;
+        p.io = NULL;
     }
 
     //Então, retornamos o processo p

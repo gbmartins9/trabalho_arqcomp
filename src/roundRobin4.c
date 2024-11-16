@@ -49,8 +49,12 @@ int roundRobin() {
         //* 1. Checar se temos algum processo novo que chegou (inserir na fila de alta prioridade)
         while(pendentes->inicio != NULL && pendentes->inicio->processo.instante_ativacao == tempo) {
             Processo temp = pendentes->inicio->processo;
-            removerFila(pendentes, &temp);
+            // removerFila(pendentes, &temp);
+            // inserirFila(fila_alta, temp);
+
+            temp = removerFila(pendentes);
             inserirFila(fila_alta, temp);
+
             printf("\n-> Processo P%d chegou na fila de alta prioridade.\n", temp.id);
         }
 
@@ -103,7 +107,7 @@ int roundRobin() {
 
             for (int i = 0; i < processo_atual->quantidade_io ; i++) {
                 if(processo_atual->tempo_servico - processo_atual->tempo_restante == processo_atual->io[i].tempo_ativacao) {
-                    Processo p = removerFila2(fila_atual);
+                    Processo p = removerFila(fila_atual);
                     // removerFila(fila_atual, processo_atual);
                     inserirFilaIO(&p, i, tempo);
                     printf("-> Processo P%d solicitou IO: \n\t Atingiu o tempo de execucao: %d \n\t Tempo restante apos a operacao: %d.\n", p.id, p.tempo_servico - p.tempo_restante, p.tempo_restante);
@@ -119,14 +123,14 @@ int roundRobin() {
         if(!troca && processo_atual->tempo_restante == 0) {
             count = 0;
             processos_concluidos++;
-            Processo p = removerFila2(fila_atual);
+            Processo p = removerFila(fila_atual);
             printf("-> Processo P%d Concluido.\n", p.id);
         }
 
         //* 4.3 Comparar o tempo em que o processo já esteve executando com o Quantum máximo
         else if (!troca && count == QUANTUM) {
             count = 0;
-            Processo p = removerFila2(fila_atual);
+            Processo p = removerFila(fila_atual);
             //processo_atual = removerFila2(fila_atual);
             inserirFila(fila_baixa, p); // Sempre para de baixa, de acordo com as premissas
             printf("-> Quantum atingido: \n\tProcesso P%d movido para fila de baixa prioridade\n\tTempo restante apos a operacao: %d\n", p.id, p.tempo_restante);
