@@ -22,9 +22,9 @@ typedef struct {
 //Definição das três filas como variáveis globais
 //Assim, é possível usá-las em todo o código
 //Sem nos preocupar em passá-las como ponteiros
-extern Fila *fila_baixa;
-extern Fila *fila_alta;
-extern Fila *io;
+Fila *fila_baixa;
+Fila *fila_alta;
+Fila *io;
 
 //*FUNÇÕES BÁSICAS DE FILA*//
 
