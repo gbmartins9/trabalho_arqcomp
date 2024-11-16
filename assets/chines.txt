@@ -1,0 +1,224 @@
+=== Tempo: 0 ===
+Processo P1 chegou na fila de alta prioridade.
+Fila Alta:  [1] 
+Fila Baixa: 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 12.
+
+=== Tempo: 1 ===
+Processo P2 chegou na fila de alta prioridade.
+Fila Alta:  [1]  [2] 
+Fila Baixa: 
+Fila I/O: 
+Executando processo P1.
+Processo P1 foi para fila de I/O
+Processo P1 continua executando. Tempo restante: 11.
+
+=== Tempo: 2 ===
+Fila Alta:  [2] 
+Fila Baixa: 
+Fila I/O:  [1] 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 10.
+
+=== Tempo: 3 ===
+Fila Alta:  [2] 
+Fila Baixa: 
+Fila I/O:  [1] 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 9.
+
+=== Tempo: 4 ===
+Fila Alta:  [2] 
+Fila Baixa: 
+Fila I/O:  [1] 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 8.
+
+=== Tempo: 5 ===
+Processo P3 chegou na fila de alta prioridade.
+Fila Alta:  [2]  [3] 
+Fila Baixa: 
+Fila I/O:  [1] 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 7.
+
+=== Tempo: 6 ===
+Fila Alta:  [2]  [3] 
+Fila Baixa: 
+Fila I/O:  [1] 
+Executando processo P2.
+Quantum atingido. Processo P2 movido para fila de baixa prioridade.
+
+=== Tempo: 7 ===
+Fila Alta:  [3] 
+Fila Baixa:  [2] 
+Fila I/O:  [1] 
+Executando processo P3.
+Processo P3 continua executando. Tempo restante: 6.
+
+=== Tempo: 8 ===
+Fila Alta:  [3] 
+Fila Baixa:  [2] 
+Fila I/O:  [1] 
+Executando processo P3.
+Processo P3 continua executando. Tempo restante: 5.
+
+=== Tempo: 9 ===
+Processo 1 completou I/O de disco e foi para fila de baixa prioridade
+Processo P1 retornou do IO.
+Fila Alta:  [3] 
+Fila Baixa:  [2]  [1] 
+Fila I/O: 
+Executando processo P3.
+Processo P3 continua executando. Tempo restante: 4.
+
+=== Tempo: 10 ===
+Fila Alta:  [3] 
+Fila Baixa:  [2]  [1] 
+Fila I/O: 
+Executando processo P3.
+Processo P3 continua executando. Tempo restante: 3.
+
+=== Tempo: 11 ===
+Fila Alta:  [3] 
+Fila Baixa:  [2]  [1] 
+Fila I/O: 
+Executando processo P3.
+Quantum atingido. Processo P3 movido para fila de baixa prioridade.
+
+=== Tempo: 12 ===
+Fila Alta: 
+Fila Baixa:  [2]  [1]  [3] 
+Fila I/O: 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 5.
+
+=== Tempo: 13 ===
+Fila Alta: 
+Fila Baixa:  [2]  [1]  [3] 
+Fila I/O: 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 4.
+
+=== Tempo: 14 ===
+Fila Alta: 
+Fila Baixa:  [2]  [1]  [3] 
+Fila I/O: 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 3.
+
+=== Tempo: 15 ===
+Fila Alta: 
+Fila Baixa:  [2]  [1]  [3] 
+Fila I/O: 
+Executando processo P2.
+Processo P2 continua executando. Tempo restante: 2.
+
+=== Tempo: 16 ===
+Fila Alta: 
+Fila Baixa:  [2]  [1]  [3] 
+Fila I/O: 
+Executando processo P2.
+Quantum atingido. Processo P2 movido para fila de baixa prioridade.
+
+=== Tempo: 17 ===
+Fila Alta: 
+Fila Baixa:  [1]  [3]  [2] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 10.
+
+=== Tempo: 18 ===
+Fila Alta: 
+Fila Baixa:  [1]  [3]  [2] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 9.
+
+=== Tempo: 19 ===
+Fila Alta: 
+Fila Baixa:  [1]  [3]  [2] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 8.
+
+=== Tempo: 20 ===
+Fila Alta: 
+Fila Baixa:  [1]  [3]  [2] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 7.
+
+=== Tempo: 21 ===
+Fila Alta: 
+Fila Baixa:  [1]  [3]  [2] 
+Fila I/O: 
+Executando processo P1.
+Quantum atingido. Processo P1 movido para fila de baixa prioridade.
+
+=== Tempo: 22 ===
+Fila Alta: 
+Fila Baixa:  [3]  [2]  [1] 
+Fila I/O: 
+Executando processo P3.
+Processo P3 continua executando. Tempo restante: 1.
+
+=== Tempo: 23 ===
+Fila Alta: 
+Fila Baixa:  [3]  [2]  [1] 
+Fila I/O: 
+Executando processo P3.
+Processo p3 Concluido.
+
+=== Tempo: 24 ===
+Fila Alta: 
+Fila Baixa:  [2]  [1] 
+Fila I/O: 
+Executando processo P2.
+Processo p2 Concluido.
+
+=== Tempo: 25 ===
+Fila Alta: 
+Fila Baixa:  [1] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 5.
+
+=== Tempo: 26 ===
+Fila Alta: 
+Fila Baixa:  [1] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 4.
+
+=== Tempo: 27 ===
+Fila Alta: 
+Fila Baixa:  [1] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 3.
+
+=== Tempo: 28 ===
+Fila Alta: 
+Fila Baixa:  [1] 
+Fila I/O: 
+Executando processo P1.
+Processo P1 continua executando. Tempo restante: 2.
+
+=== Tempo: 29 ===
+Fila Alta: 
+Fila Baixa:  [1] 
+Fila I/O: 
+Executando processo P1.
+Quantum atingido. Processo P1 movido para fila de baixa prioridade.
+
+=== Tempo: 30 ===
+Fila Alta: 
+Fila Baixa:  [1] 
+Fila I/O: 
+Executando processo P1.
+Processo p1 Concluido.
+
+=== Todos os processos foram concluídos em 31 unidades de tempo. ===

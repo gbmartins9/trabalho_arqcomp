@@ -3,6 +3,10 @@
 #include "../include/commons.h"
 #include "../include/fila.h"
 
+Fila *fila_baixa = NULL;
+Fila *fila_alta = NULL;
+Fila *io = NULL;
+
 //TODO: Tirar o retorno
 int roundRobin() {
     int tempo_aux = -1;
@@ -67,10 +71,11 @@ int roundRobin() {
             }
             IOatual = IOatual->proximo_processo;
         }
-        // printf("Debug: Tempo = %d, Processos Concluídos = %d\n", tempo, processos_concluidos);
+
         mostrarFila(fila_alta, "Alta");
         mostrarFila(fila_baixa, "Baixa");
         mostrarFila(io, "I/O");
+
 
         //* 3. Selecionar a proxima fila de execucao 
         if (fila_alta->inicio != NULL) {
@@ -86,25 +91,17 @@ int roundRobin() {
         }
         processo_atual = &(fila_atual->inicio->processo); 
         printf("Executando processo P%d.\n", processo_atual->id);
-
+ 
+        processo_atual->tempo_restante--;
+        tempo++;
+        count++;
+        bool troca = false;
 
         //* 4. Checar se o processo atual continuará executando ou sofrerá preempção/IO
-        
-        //* 4.1 Checar se o processo já acabou
-        // if(processo_atual->tempo_restante == 0) {
-        //     count = 0;
-        //     processos_concluidos++;
-        //     Processo p = removerFila2(fila_atual);
-        //     //removerFila(fila_atual, processo_atual); //Não precisaria armazenar o processo sendo tirado, mas tá aí por causa da função
-        //     printf("Processo P%d concluido.\n", p.id);
-        // }
-
-        bool troca = false;
 
         //* 4.2 Verificar se o processo tem IO
         if (processo_atual->quantidade_io != 0) {
             //Percorrer vetor de IO do processo.
-    
             //! bool teste = false;
 
             for (int i = 0; i < processo_atual->quantidade_io ; i++) {
@@ -119,45 +116,30 @@ int roundRobin() {
                     break;
                 }
             }
-            // if(teste == false) {
-            //     processo_atual->tempo_restante--; 
+        }
 
-            //     count++;
-            //     tempo++;
-            //     printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
-            // }
-            //!! SE ISSO EXECUTAR MAS SAIR DO FOR, TEM QUE EXECUTAR O ELSE TAMBÉM 
+        //* 4.1 Checar se o processo já acabou       
+        if(!troca && processo_atual->tempo_restante == 0) {
+            count = 0;
+            processos_concluidos++;
+            Processo p = removerFila2(fila_atual);
+            printf("Processo p%d Concluido.\n", p.id);
         }
 
         //* 4.3 Comparar o tempo em que o processo já esteve executando com o Quantum máximo
-        else if (count == QUANTUM) {
-            troca = true;
+        else if (!troca && count == QUANTUM) {
             count = 0;
             Processo p = removerFila2(fila_atual);
             //processo_atual = removerFila2(fila_atual);
             inserirFila(fila_baixa, p); // Sempre para de baixa, de acordo com as premissas
             printf("Quantum atingido. Processo P%d movido para fila de baixa prioridade.\n", p.id);
-        } 
+        }
 
-        if (troca == false) {
-            //Se nada aconteceu, então o processo continua executando, e count é incrementado
-            processo_atual->tempo_restante--;
-
-            // mostraProcesso(*processo_atual);
-
-            if(processo_atual->tempo_restante == 0) {
-                count = 0;
-                processos_concluidos++;
-                Processo p = removerFila2(fila_atual);
-                printf("Processo p%d Concluido.\n", p.id);
-            }
-            else {
-                count++;
-                tempo++;
-                printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
-            }
+        else {
+            printf("Processo P%d continua executando. Tempo restante: %d.\n", processo_atual->id, processo_atual->tempo_restante);
         }
     }
+
     printf("\n=== Todos os processos foram concluídos em %d unidades de tempo. ===\n", tempo);
     return 0;
 }
