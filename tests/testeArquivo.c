@@ -28,9 +28,6 @@ Fila* lerTeste(char *nome_teste) {
 
     // Variável que receberá cada linha do arquivo
     char linha[100]; 
-
-    // Essa variável servirá somente para abrigar uma flag temporária.
-    char flag;
     
     // Teste para verificar se o arquivo foi aberto corretamente
     if (teste == NULL) printf("\nErro ao abrir arquivo!\n");
@@ -38,7 +35,7 @@ Fila* lerTeste(char *nome_teste) {
     // Para cada linha do arquivo
     while (fgets(linha, sizeof(linha), teste)) {
         // Verifica se é uma linha de I/O. Se for, pula para a próxima.
-        if (linha[0] == 'F') continue;
+        if (linha[0] == ';') continue;
 
         // Lê os parâmetros para a criação do processo.
         int id, tempo_servico, instante_ativacao, quant_ios;
@@ -53,7 +50,7 @@ Fila* lerTeste(char *nome_teste) {
                 int tipo, tempo_execucao, tempo_ativacao; 
                 // Lê os parâmetros para a criação do I/O.
                 fgets(linha, sizeof(linha), teste);
-                sscanf(linha, "%c; %d; %d; %d;", &flag, &tipo, &tempo_execucao, &tempo_ativacao);
+                sscanf(linha, "; %d; %d; %d;", &tipo, &tempo_execucao, &tempo_ativacao);
                 // Cria um novo I/O e adiciona ao vetor de I/O do processo.
                 IO novo = novoIO(tipo, tempo_ativacao);
                 io[i] = novo;
