@@ -1,11 +1,18 @@
-#include "../include/commons.h"
-#include "../include/fila.h"
+#include "../include/arquivos.h"
 
-Fila* lerTeste(char *nome_teste) {
+//Faz a leitura de um arquivo texto
+//Contendo os atributos dos processos 
+//Que serão utilizados no simulador.
+//Retorna a fila com todos os processos
+//Pendentes
+Fila* lerArquivo(char *nome_arquivo) {
 
-    // Abertura do arquivo
-    FILE *teste;
-    teste = fopen(nome_teste, "r");
+    // Abertura do arquivo em modo leitura
+    FILE *arquivo;
+    arquivo = fopen(nome_arquivo, "r");
+
+    // Teste para verificar se o arquivo foi aberto corretamente
+    if (arquivo == NULL) printf("\nErro ao abrir arquivo!\n");
     
     // Inicialização da fila de pendentes que será retornada
     Fila *pendentes = inicializaFila();
@@ -13,11 +20,8 @@ Fila* lerTeste(char *nome_teste) {
     // Variável que receberá cada linha do arquivo
     char linha[100]; 
     
-    // Teste para verificar se o arquivo foi aberto corretamente
-    if (teste == NULL) printf("\nErro ao abrir arquivo!\n");
-
     // Para cada linha do arquivo
-    while (fgets(linha, sizeof(linha), teste)) {
+    while (fgets(linha, sizeof(linha), arquivo)) {
         // Verifica se é uma linha de I/O. Se for, pula para a próxima.
         if (linha[0] == ';') continue;
 
@@ -33,7 +37,7 @@ Fila* lerTeste(char *nome_teste) {
             for (int i = 0; i < quant_ios; i++) {
                 int tipo, tempo_ativacao; 
                 // Lê os parâmetros para a criação do I/O.
-                fgets(linha, sizeof(linha), teste);
+                fgets(linha, sizeof(linha), arquivo);
                 sscanf(linha, "; %d; %d;", &tipo, &tempo_ativacao);
                 // Cria um novo I/O e adiciona ao vetor de I/O do processo.
                 IO novo = novoIO(tipo, tempo_ativacao);
@@ -44,15 +48,18 @@ Fila* lerTeste(char *nome_teste) {
         inserirFila(pendentes, novoProcesso(id, tempo_servico, instante_ativacao, quant_ios, io));
     }
     // Fecha o arquivo teste.
-    fclose(teste);
+    fclose(arquivo);
     // Retorna nossa lista final dos processos criados.
     return pendentes;
 }
 
-void printTeste(Fila *teste) {
+//Mostra os processos lidos do arquivo
+//No formato de uma tabela, para facilitar
+//a apresentação 
+void printProcessos(Fila *pendentes) {
 
     // Nó que usaremos para iterar sobre a lista teste.
-    No *atual = teste->inicio;
+    No *atual = pendentes->inicio;
 
     // Vetor que fará a "tradução" do tipo numérico para textual do I/O.
     const char *tipoIOStrings[] = {"DISCO", "FITA", "IMPRESSORA"};

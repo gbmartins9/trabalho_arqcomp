@@ -46,8 +46,6 @@ typedef struct {
     IO *io; 
 } Processo;
 
-//*FUNÇÕES*//
-
 //Função para instanciar um novo IO dentro do Processo
 IO novoIO(Tipo_IO tipo, int tempo_ativacao);
 

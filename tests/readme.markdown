@@ -1,0 +1,1 @@
+Estes arquivos foram usados para fazer alguns dos testes (não todos) do projeto, ao longo de sua execução. Assim, não devem ser rodados, visto que possuem funções descartadas ou alteradas. Mantivemos esses arquivos aqui apenas para termos um registro do histórico do projeto. 

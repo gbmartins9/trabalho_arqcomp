@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "../include/commons.h"
-#include "../include/fila.h"
+#include "../include/rr.h"
 
 extern Fila *fila_baixa;
 extern Fila *fila_alta;
