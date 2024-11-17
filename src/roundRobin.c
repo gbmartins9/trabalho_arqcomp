@@ -10,17 +10,21 @@ extern Fila *io;
 void roundRobin(Fila *pendentes) {
     
     //*DEFINIÇÃO DE VARIÁVEIS*//
-
+    
     int tempo = 0;
     int processos_concluidos = 0; 
     int tempo_passado = 0;
     Processo *processo_atual = NULL;
     Fila *fila_atual = NULL;
+    fila_baixa = inicializaFila();
+    fila_alta = inicializaFila();
+    io = inicializaFila();
     bool troca;
 
     //*LÓGICA DO ESCALONADOR*//
 
     while (processos_concluidos != MAX_PROCESSES) {
+        
         //Mostramos o intervalo de tempo atual
         printf("\n=== Tempo: %d - %d ===\n", tempo, tempo + 1);
         
@@ -146,32 +150,32 @@ void roundRobin(Fila *pendentes) {
     return;
 }
 
-int main() {
+// int main() {
 
-    Fila *pendentes = inicializaFila();
+//     Fila *pendentes = inicializaFila();
     
-    if (pendentes == NULL) {
-        printf("Erro ao inicializar a fila de pendentes.\n");
-        return -1;
-    }
+//     if (pendentes == NULL) {
+//         printf("Erro ao inicializar a fila de pendentes.\n");
+//         return -1;
+//     }
 
-    fila_alta = inicializaFila();
-    fila_baixa = inicializaFila();
-    io = inicializaFila();
+//     fila_alta = inicializaFila();
+//     fila_baixa = inicializaFila();
+//     io = inicializaFila();
     
-    IO empty[] = {};
-    IO lista_ioP1[] = {novoIO(0, 4)};
-    IO lista_ioP2[] = {novoIO(1, 6), novoIO(0, 6)};
-    IO lista_ioP5[] = {novoIO(0, 2), novoIO(1, 7)};
+//     IO empty[] = {};
+//     IO lista_ioP1[] = {novoIO(0, 4)};
+//     IO lista_ioP2[] = {novoIO(1, 6), novoIO(0, 6)};
+//     IO lista_ioP5[] = {novoIO(0, 2), novoIO(1, 7)};
 
-    inserirFila(pendentes, novoProcesso(1, 13, 0, 1, lista_ioP1));
-    inserirFila(pendentes, novoProcesso(2, 11, 4, 2, lista_ioP2));
-    inserirFila(pendentes, novoProcesso(3, 7, 5, 0, empty));
-    inserirFila(pendentes, novoProcesso(4, 8, 7, 0, empty));
-    inserirFila(pendentes, novoProcesso(5, 16, 10, 2, lista_ioP5));
+//     inserirFila(pendentes, novoProcesso(1, 13, 0, 1, lista_ioP1));
+//     inserirFila(pendentes, novoProcesso(2, 11, 4, 2, lista_ioP2));
+//     inserirFila(pendentes, novoProcesso(3, 7, 5, 0, empty));
+//     inserirFila(pendentes, novoProcesso(4, 8, 7, 0, empty));
+//     inserirFila(pendentes, novoProcesso(5, 16, 10, 2, lista_ioP5));
 
 
 
-    roundRobin(pendentes);
-    return 0;
-}
+//     roundRobin(pendentes);
+//     return 0;
+// }

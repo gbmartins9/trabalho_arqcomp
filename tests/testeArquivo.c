@@ -47,10 +47,10 @@ Fila* lerTeste(char *nome_teste) {
             io = malloc(quant_ios * sizeof(IO));
             // Para cada I/O da linha seguinte
             for (int i = 0; i < quant_ios; i++) {
-                int tipo, tempo_execucao, tempo_ativacao; 
+                int tipo, tempo_ativacao; 
                 // Lê os parâmetros para a criação do I/O.
                 fgets(linha, sizeof(linha), teste);
-                sscanf(linha, "; %d; %d; %d;", &tipo, &tempo_execucao, &tempo_ativacao);
+                sscanf(linha, "; %d; %d;", &tipo, &tempo_ativacao);
                 // Cria um novo I/O e adiciona ao vetor de I/O do processo.
                 IO novo = novoIO(tipo, tempo_ativacao);
                 io[i] = novo;
@@ -65,10 +65,7 @@ Fila* lerTeste(char *nome_teste) {
     return pendentes;
 }
 
-void printTeste(char *nome_teste) {
-
-    // Inicializamos lista de teste para receber o arquivo.
-    Fila *teste = lerTeste(nome_teste);
+void printTeste(Fila *teste) {
 
     // Nó que usaremos para iterar sobre a lista teste.
     No *atual = teste->inicio;
@@ -96,7 +93,7 @@ void printTeste(char *nome_teste) {
 
             // Outras linhas dos IOs (se houver mais de 1)
             for (int i = 1; i < p.quantidade_io; i++) {
-                printf("|          |                  |                   | %-41d     | %-22c |\n", p.io[i].tempo_ativacao, tipoIOStrings[p.io[0].tipo]);
+                printf("|          |                  |                   | %-41d     | %-22s |\n", p.io[i].tempo_ativacao, tipoIOStrings[p.io[i].tipo]);
             }
         } else {
             // Sem IOs
@@ -114,7 +111,7 @@ void printTeste(char *nome_teste) {
 
 int main() {
     
-    printTeste("tests/1.txt");
+    printTeste(lerTeste("tests/2.txt"));
     
     return 0;
 }

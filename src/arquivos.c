@@ -1,13 +1,3 @@
-/*
-TODO DE LEITURA DE ARQUIVOS
-
--> Leitura e identificação dos 5 processos
--> Identificadores e tempos de serviço e ativação
--> Precisamos pegar todos os IOs de cada processo, 
-    suas características, e contar quantos são por processo
-
-*/
-
 #include "../include/commons.h"
 #include "../include/fila.h"
 
@@ -41,10 +31,10 @@ Fila* lerTeste(char *nome_teste) {
             io = malloc(quant_ios * sizeof(IO));
             // Para cada I/O da linha seguinte
             for (int i = 0; i < quant_ios; i++) {
-                int tipo, tempo_execucao, tempo_ativacao; 
+                int tipo, tempo_ativacao; 
                 // Lê os parâmetros para a criação do I/O.
                 fgets(linha, sizeof(linha), teste);
-                sscanf(linha, "; %d; %d; %d;", &tipo, &tempo_execucao, &tempo_ativacao);
+                sscanf(linha, "; %d; %d;", &tipo, &tempo_ativacao);
                 // Cria um novo I/O e adiciona ao vetor de I/O do processo.
                 IO novo = novoIO(tipo, tempo_ativacao);
                 io[i] = novo;
@@ -59,7 +49,6 @@ Fila* lerTeste(char *nome_teste) {
     return pendentes;
 }
 
-//* Em geral, passaremos o retorno de lerTeste para printTeste.
 void printTeste(Fila *teste) {
 
     // Nó que usaremos para iterar sobre a lista teste.
@@ -88,7 +77,7 @@ void printTeste(Fila *teste) {
 
             // Outras linhas dos IOs (se houver mais de 1)
             for (int i = 1; i < p.quantidade_io; i++) {
-                printf("|          |                  |                   | %-41d     | %-22c |\n", p.io[i].tempo_ativacao, tipoIOStrings[p.io[0].tipo]);
+                printf("|          |                  |                   | %-41d     | %-22s |\n", p.io[i].tempo_ativacao, tipoIOStrings[p.io[i].tipo]);
             }
         } else {
             // Sem IOs
@@ -102,4 +91,5 @@ void printTeste(Fila *teste) {
         atual = atual->proximo_processo;
     }
 }
+
 
