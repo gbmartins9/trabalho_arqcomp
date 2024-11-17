@@ -1,1 +1,0 @@
-Deletar essa pasta antes de finalizar o projeto, está aqui apenas para ajudar com as definições de fila.
