@@ -53,6 +53,7 @@ Processo novoProcesso(int id, int tempo_servico, int instante_ativacao, int quan
     p.tempo_servico = tempo_servico; 
     p.tempo_restante = tempo_servico; 
     p.instante_ativacao = instante_ativacao;
+    p.turnaround = -1;
     
     //Atribuímos a quantidade de IOs e o vetor com os IOs para o processo
     //Checamos se a lista não está vazia, e se nenhum dos tempos de ativação

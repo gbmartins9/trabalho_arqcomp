@@ -41,6 +41,7 @@ typedef struct {
     int tempo_servico;
     int tempo_restante;
     int instante_ativacao;
+    int turnaround;
     int quantidade_io;
     IO *io; 
 } Processo;

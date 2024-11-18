@@ -13,12 +13,13 @@ void roundRobin(Fila *pendentes) {
     int tempo = 0;
     int processos_concluidos = 0; 
     int tempo_passado = 0;
-    Processo *processo_atual = NULL;
+    Processo processo_atual;
     Fila *fila_atual = NULL;
     fila_baixa = inicializaFila();
     fila_alta = inicializaFila();
     io = inicializaFila();
-    bool troca;
+    int turnaround[5];
+    bool troca = true;
 
     //*LÓGICA DO ESCALONADOR*//
 
@@ -63,25 +64,28 @@ void roundRobin(Fila *pendentes) {
         //De baixa prioridade. Se nenhuma das duas filas estiver com processos, isso quer dizer que todos os processos no
         //Tempo corrente estão bloqueados (em I/O), ou que ainda há processos restantes, mas eles ainda não chegaram em 
         //Seus tempos de ativação. 
-        if (fila_alta->inicio != NULL) {
-            fila_atual = fila_alta;
-        }
-        else if (fila_baixa->inicio != NULL){
-            fila_atual = fila_baixa;
-        }
-        else {
-            printf("-> Nenhum processo disponivel. CPU ociosa.\n");
-            tempo++; //Neste caso, o tempo ainda passa. 
-            continue; //Pulamos para a próxima iteração. 
+        if(troca) {
+            if (troca && fila_alta->inicio != NULL) {
+                fila_atual = fila_alta;
+            }
+            else if (troca && fila_baixa->inicio != NULL){
+                fila_atual = fila_baixa;
+            }
+            else {
+                printf("-> Nenhum processo disponivel. CPU ociosa.\n");
+                tempo++; //Neste caso, o tempo ainda passa. 
+                continue; //Pulamos para a próxima iteração. 
+            }
+            processo_atual = removerFila(fila_atual);
         }
 
         //* Executar o processo atual
         //Selecionamos o processo no início da fila atual, mas não o retiramos ainda. 
-        processo_atual = &(fila_atual->inicio->processo); 
-        printf("-> Executando processo P%d:\n\tTempo de servico total: %d\n\tTempo restante antes da operacao: %d.\n", processo_atual->id, processo_atual->tempo_servico, processo_atual->tempo_restante);
+        // processo_atual = (removerFila(fila_atual));
+        printf("-> Executando processo P%d:\n\tTempo de servico total: %d\n\tTempo restante antes da operacao: %d.\n", processo_atual.id, processo_atual.tempo_servico, processo_atual.tempo_restante);
     
         //Executamos o processo
-        processo_atual->tempo_restante--; //tempo restante diminui
+        processo_atual.tempo_restante--; //tempo restante diminui
         tempo++; //tempo global incrementa
         tempo_passado++; //contador incrementa
         troca = false; //definimos a flag troca como false
@@ -91,11 +95,13 @@ void roundRobin(Fila *pendentes) {
         //* 4.1 Checar se o processo já acabou
         //Se o tempo restante for nulo após a execução,
         //Então o processo terminou, e poderá ser removido da fila atual.
-        if(processo_atual->tempo_restante == 0) {
+        if(processo_atual.tempo_restante == 0) {
             tempo_passado = 0; //Zeramos o contador
+            processo_atual.turnaround = tempo - processo_atual.instante_ativacao; //Calcula o turnaround
+            turnaround[processos_concluidos] = processo_atual.turnaround; //Guarda o turnaround do processo no vetor
             processos_concluidos++; //Incrementamos a quantidade de processos concluídos
-            Processo p = removerFila(fila_atual);
-            printf("-> Processo P%d Concluido.\n", p.id);
+            printf("-> Processo P%d Concluido.\n", processo_atual.id);
+            troca = true;
             continue; //Podemos ir para a próxima iteração, pois sabemos que as próximas checagens serão falsas
         }
 
@@ -103,14 +109,14 @@ void roundRobin(Fila *pendentes) {
         //Se o processo tiver a quantidade total de IOs diferente de 0, 
         //Percorremos por todo o vetor contendo seus IOs, checando se o tempo de ativação
         //De algum deles é o tempo corrente. Se for, colocamos o processo na fila de IO. 
-        if (processo_atual->quantidade_io != 0) {
-            for (int i = 0; i < processo_atual->quantidade_io; i++) {
-                if(processo_atual->tempo_servico - processo_atual->tempo_restante == processo_atual->io[i].tempo_ativacao) {
+        if (processo_atual.quantidade_io != 0) {
+            for (int i = 0; i < processo_atual.quantidade_io; i++) {
+                if(processo_atual.tempo_servico - processo_atual.tempo_restante == processo_atual.io[i].tempo_ativacao) {
                     tempo_passado = 0;  //Zeramos o contador
                     troca = true; //Colocamos a flag troca como true
-                    Processo temp = removerFila(fila_atual);
-                    inserirFilaIO(&temp, i, tempo);
-                    printf("-> Processo P%d solicitou IO: \n\t Atingiu o tempo de execucao: %d \n\t Tempo restante apos a operacao: %d.\n", temp.id, temp.tempo_servico - temp.tempo_restante, temp.tempo_restante);
+                    //Processo temp = removerFila(fila_atual);
+                    inserirFilaIO(&processo_atual, i, tempo);
+                    printf("-> Processo P%d solicitou IO: \n\t Atingiu o tempo de execucao: %d \n\t Tempo restante apos a operacao: %d.\n", processo_atual.id, processo_atual.tempo_servico - processo_atual.tempo_restante, processo_atual.tempo_restante);
                     break; //Podemos sair do loop, pois sabemos que não haverá mais nenhum IO com instante de ativação no tempo corrente
                 }
             }
@@ -122,15 +128,34 @@ void roundRobin(Fila *pendentes) {
         //O processo sofrerá preempção, sendo enviado para a fila de baixa prioridade,
         //Como especificado nas premissas. 
         if (!troca && tempo_passado == QUANTUM) {
+
+            //Caso tenha ocorrido uma troca de quantum, é necessário, também, checar 
+            //Se algum processo concluiu I/O. Isso ocorre pois já estamos no tempo t + 1,
+            //E em tese já faríamos essa checagem no próximo loop, mas o teste apenas ocorre
+            //Depois de inserirmos alguém que sofreu preempção, e isso violaria a premissa
+            //Que a ordem de entrada da fila de prontos é novo - I/O - preempção. 
+            //Assim, no caso degenerado que o QUANTUM termina ao mesmo tempo que alguém
+            //Termina I/O, esta checagem adicional é necessária.  
+            No *IOatual = io->inicio;
+            while(IOatual != NULL) {
+                for(int i = 0; i < IOatual->processo.quantidade_io; i++) {
+                    if(tempo == IOatual->processo.io[i].tempo_retorno) {
+                        removerFilaIO(&(IOatual->processo), i);
+                    }
+                }
+                IOatual = IOatual->proximo_processo;
+            }
+
             tempo_passado = 0; //Zeramos o contador
-            Processo p = removerFila(fila_atual); 
-            inserirFila(fila_baixa, p); 
-            printf("-> Quantum atingido: \n\tProcesso P%d movido para fila de baixa prioridade\n\tTempo restante apos a operacao: %d\n", p.id, p.tempo_restante);
+            // Processo p = removerFila(fila_atual); 
+            inserirFila(fila_baixa, processo_atual); 
+            troca = true;
+            printf("-> Quantum atingido: \n\tProcesso P%d movido para fila de baixa prioridade\n\tTempo restante apos a operacao: %d\n", processo_atual.id, processo_atual.tempo_restante);
         }
 
         //Se não tiver tido nenhum tipo de troca, informamos que não houve preempção nem I/O, e informamos o tempo restante após este instante de tempo. 
         else if (!troca) {
-            printf("-> Processo P%d nao sofreu preempcao nem I/O.\n\tTempo restante apos a operacao: %d.\n", processo_atual->id, processo_atual->tempo_restante);
+            printf("-> Processo P%d nao sofreu preempcao nem I/O.\n\tTempo restante apos a operacao: %d.\n", processo_atual.id, processo_atual.tempo_restante);
         }
     }
 
@@ -146,14 +171,23 @@ void roundRobin(Fila *pendentes) {
     printf("\n");
 
     printf("=== Todos os processos foram concluidos em %d unidades de tempo. ===\n", tempo); 
+
+
+    printf("Turnarounds: \n");
+    for (int i = 0; i < 5; i++) {
+        printf("Processo: %d, com turnaround %d\n", i+1, turnaround[i]);
+    }
+    printf("\n");
+
     return;
 }
+
 
 
 int main() {
 
     //Leitura do arquivo de entrada    
-    Fila *pendentes = lerArquivo("Docs/Entrada4.txt");
+    Fila *pendentes = lerArquivo("Docs/EntradaResultado.txt");
     
     //Mostramos os processos lidos na forma de tabela
     printProcessos(pendentes);
