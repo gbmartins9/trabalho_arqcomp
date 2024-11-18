@@ -18,7 +18,6 @@
 //Usadas de acordo com as premissas
 #define QUANTUM 5
 #define MAX_PROCESSES 5
-#define MAX_IO 10 //? Tirar
 
 //Definição do tipo de enum, usando um IO
 typedef enum {

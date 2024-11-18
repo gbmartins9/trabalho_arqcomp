@@ -1,10 +1,5 @@
 #include "../include/commons.h"
 
-
-//! TEMOS QUE VER O QUE OCORRE NOS CASOS DEGENERADOS
-//! PROPONHO AVISAR QUE NÃO SERÁ EXECUTADO AQUELE IO, MAS CONTINUAR COM 
-//! O SIMULADOR
-
 //Função para instanciar um novo IO dentro do Processo
 IO novoIO(Tipo_IO tipo, int tempo_ativacao) {
 

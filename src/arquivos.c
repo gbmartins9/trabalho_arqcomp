@@ -12,7 +12,10 @@ Fila* lerArquivo(char *nome_arquivo) {
     arquivo = fopen(nome_arquivo, "r");
 
     // Teste para verificar se o arquivo foi aberto corretamente
-    if (arquivo == NULL) printf("\nErro ao abrir arquivo!\n");
+    if (arquivo == NULL) {
+        printf("\nErro: ao abrir arquivo!\n\n"); 
+        exit(1); //Termina o código pois é um erro crítico
+    }
     
     // Inicialização da fila de pendentes que será retornada
     Fila *pendentes = inicializaFila();

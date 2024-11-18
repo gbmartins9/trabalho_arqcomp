@@ -1,25 +1,51 @@
-O QUE FAZER A CADA TEMPO:
+# PSEUDOCÓDIGO PARA O SIMULADOR #
 
-    1. Checar se temos algum processo novo que chegou
-        -> Verificar se o instante de ativação do processo eh igual ao tempo corrente
-        -> Insere na alta
+Para cada tempo t, enquanto a quantidade de processos concluídos não for 5
 
-    2. Verificar se o tempo de retorno de algum I/O eh igual ao tempo corrente
-        -> Insere na fila de alta/baixa dependendo do I/O (insereFilaIO)
+1. Checar se temos algum processo novo
+    -> Caso a fila de pendentes não esteja vazia, e enquanto o instante 
+    de ativação do processo for o tempo corrente
+        -> Removemos o processo da fila de pendentes
+        -> Inserimos o processo na alta prioridade
 
-    3. Selecionar a proxima fila de execucao 
-        -> Se nao tiver vazia, alta. Caso contrário, baixa.
+2. Verificar se algum processo foi desbloqueado
+    -> Para cada processo na fila de I/O 
+        -> Checar se o tempo de retorno do I/O é o tempo corrente 
+        -> Insere na fila de alta/baixa prioridade, a depender do I/O
 
-    4. Checar se o processo atual continuara executando ou sofrerá preempção/IO
-        4.1 Verificar se o processo já acabou 
-            -> Se tiver acabado, incrementa "processos_concluidos"
-            -> Seleciona o próximo da fila de alta/baixa prioridade
+3. Selecionar a próxima fila de execução 
+    -> Se a fila de alta estiver vazia, ela será executada  
+    -> Caso a fila de baixa esteja vazia, ela será executada 
+    -> Se as duas filas estiverem vazias, a CPU está ociosa e o tempo passa 
+        ? Caso degenerado: isso nunca deverá acontecer na prática, 
+        ? Mas podemos passar valores indevidos na entrada do arquivo,
+        ? E acontecer de todos os processos estarem bloqueados, ou os
+        ? Processos restantes não terem sido ativados ainda. 
 
-        4.2 Verificar se o processo tem IO
-            -> Se o processo tem, checar se o tempo de ativação do IO dele é o tempo atual 
-                -> Se sim, colocar na Fila de IO (inserirFilaIO)
-                -> Calcular tempo de retorno do I/O daquele processo.
+4. Executamos o processo no topo da fila 
+    -> NÃO o retiramos do topo 
+    -> Reduzimos seu tempo de execução em 1
+    -> Aumentamos o contador do tempo passado com o mesmo processo em 1
+    -> Aumentamos o tempo global em 1
 
-        4.3 Comparar o tempo em que o processo ja esteve executando com o Quantum máximo
-            -> Checar variável "count" para ver se é igual ao Quantum. 
-                -> Se for, "count" = 0 e o processo volta para fila de alta/baixa
+5. Checar se o processo terminou, continuará executando, ou sofrerá preempção/IO 
+
+    5.1 Verificar se o processo já terminou
+        -> Se o tempo restante for 0
+            -> Incrementa a quantidade de processos conluídos 
+            -> Retira o processo da fila de alta/baixa prioridade
+            -> Continua para próximo loop
+    
+    5.2 Verificar se o processo possui algum I/O que ativa no tempo corrente
+        -> Se o processo tiver a quantidade de I/O > 0
+        -> Percorremos o vetor de I/O, verificando se o tempo de ativação do I/O é o tempo atual
+            ! Na verdade, a checagem deve ser com o tempo relativo do processo 
+        -> Se for, removemos o processo da fila atual, e o inserimos na fila de I/O
+            -> Calculando o tempo de retorno  
+    
+    5.3 Verificar se o processo já esteve executando por 5 time slices 
+        -> Se tiver, zerar o contador de tempo passado executando o mesmo processo 
+        -> Remover da fila atual 
+        -> Inserir na fila de baixa prioridade 
+
+Ao concluir todos os processos, mostrar as filas vazias e o instante de tempo final 
