@@ -153,7 +153,7 @@ void roundRobin(Fila *pendentes) {
 int main() {
 
     //Leitura do arquivo de entrada    
-    Fila *pendentes = lerArquivo("Docs/Entrada2.txt");
+    Fila *pendentes = lerArquivo("Docs/Entrada4.txt");
     
     //Mostramos os processos lidos na forma de tabela
     printProcessos(pendentes);
