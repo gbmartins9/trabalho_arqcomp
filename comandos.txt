@@ -1,4 +1,7 @@
 #Texto com os comandos apenas para facilitar a apresentação: 
 
 gcc include/*.h src/*.c -o bin\simulador.exe -Wall
+
 bin\.\simulador.exe
+ou
+./bin/simulador.exe

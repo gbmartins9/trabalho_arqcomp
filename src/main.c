@@ -18,7 +18,7 @@ void roundRobin(Fila *pendentes) {
     fila_baixa = inicializaFila();
     fila_alta = inicializaFila();
     io = inicializaFila();
-    int turnaround[5];
+    Processo turnaround[MAX_PROCESSES];
     bool troca = true;
 
     //*LÓGICA DO ESCALONADOR*//
@@ -98,7 +98,7 @@ void roundRobin(Fila *pendentes) {
         if(processo_atual.tempo_restante == 0) {
             tempo_passado = 0; //Zeramos o contador
             processo_atual.turnaround = tempo - processo_atual.instante_ativacao; //Calcula o turnaround
-            turnaround[processos_concluidos] = processo_atual.turnaround; //Guarda o turnaround do processo no vetor
+            turnaround[processos_concluidos] = processo_atual; //Guarda o processo concluido no vetor
             processos_concluidos++; //Incrementamos a quantidade de processos concluídos
             printf("-> Processo P%d Concluido.\n", processo_atual.id);
             troca = true;
@@ -173,9 +173,9 @@ void roundRobin(Fila *pendentes) {
     printf("=== Todos os processos foram concluidos em %d unidades de tempo. ===\n", tempo); 
 
 
-    printf("Turnarounds: \n");
+    printf("\nTurnarounds: \n");
     for (int i = 0; i < 5; i++) {
-        printf("Processo: %d, com turnaround %d\n", i+1, turnaround[i]);
+        printf("Processo P%d, com turnaround %d\n", turnaround[i].id, turnaround[i].turnaround);
     }
     printf("\n");
 
